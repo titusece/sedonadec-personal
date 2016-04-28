@@ -53,8 +53,8 @@ static unsigned int override_en = 0; //tell you override status from BDT
 static unsigned int override_en_bkp = 0; //tell you override status from BDT
 volatile static unsigned int priority_sae = 0; //new pri level which is modified by sedona
 volatile static unsigned int priority_bkp = 0; // pri level comes from sedona (so taking backup for the next step)
-volatile static unsigned int priority_act = 255; //default value
-//volatile static unsigned int object_index = 0; // pri level comes from sedona (so taking backup for the next step)
+volatile static unsigned int priority_act = 9; //default value
+volatile static unsigned int web_status = 0;
 
 
 //make it global
@@ -66,6 +66,7 @@ unsigned int priority = 0;
 static bool wp_en = false;
 
 static unsigned int dummy = 0;
+//static unsigned int dummy2 = 0;
 
 
 #ifndef MAX_BINARY_OUTPUTS
@@ -200,10 +201,10 @@ BACNET_BINARY_PV Binary_Output_Present_Value(
     if (index < MAX_BINARY_OUTPUTS) {
         for (i = 0; i < BACNET_MAX_PRIORITY; i++) {
 	 priority_act = i;
-//	printf("index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
+	printf("index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
             if (Binary_Output_Level[index][i] != BINARY_NULL) {
                 value = Binary_Output_Level[index][i];
-//	printf("SUCCESSFUL index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
+	printf("SUCCESSFUL index %d value %d i %d Binary_Output_Level[%d][%d] %d\n",index,value,i,index,i,Binary_Output_Level[index][i]);
 
 	//updating the "level2" var to sending the value to SAE.
 	level2 = value;
@@ -552,7 +553,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
 
 
 /* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-BACnet_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
+web_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
 {
 
 //    printf("BACnet_BACnetDev_doBacnetValueStatus: Value : %d  override_en : %d \n",level2,override_en);
@@ -560,7 +561,7 @@ BACnet_BACnetDev_doBacnetValueStatus(SedonaVM* vm, Cell* params)
 }
 
 /* Titus : return to sedona what BDT gives (the GPIO no will be returned) */
-BACnet_BACnetDev_doBacnetPriorityStatus(SedonaVM* vm, Cell* params)
+web_BACnetDev_doBacnetPriorityStatus(SedonaVM* vm, Cell* params)
 {
 	priority_sae = params[0].ival;
 	priority_change = params[1].ival;
@@ -568,7 +569,7 @@ BACnet_BACnetDev_doBacnetPriorityStatus(SedonaVM* vm, Cell* params)
 }
 
 /* Titus : return if override happens */
-BACnet_BACnetDev_doBacnetOverrideStatus(SedonaVM* vm, Cell* params)
+web_BACnetDev_doBacnetOverrideStatus(SedonaVM* vm, Cell* params)
 {
 
 	override_en_bkp = override_en;//backup the override event.
@@ -580,7 +581,7 @@ BACnet_BACnetDev_doBacnetOverrideStatus(SedonaVM* vm, Cell* params)
 }
 
 /* Titus : return to sedona what BDT gives (value which needs to be written into GPIO) */
-BACnet_BACnetDev_doBacnetValueUpdate(SedonaVM* vm, Cell* params)
+web_BACnetDev_doBacnetValueUpdate(SedonaVM* vm, Cell* params)
 {
 
 	object_index = params[2].ival;//ObjectID
@@ -588,14 +589,48 @@ BACnet_BACnetDev_doBacnetValueUpdate(SedonaVM* vm, Cell* params)
 	if(dummy == 0)
 	{
 	dummy++;
+	//initialization
+	Binary_Output_Level[0][9] = 0;
+	Binary_Output_Level[1][9] = 0;
+	Binary_Output_Level[2][9] = 0;
+	Binary_Output_Level[3][9] = 0;
+	}
+
+
+/*
+	if(dummy1 == 0 && object_index == 0)
+	{
+	dummy1++;
 	priority_act = 9;//default priority (@10)
 	}
 
+	if(dummy2 == 0 && object_index == 1)
+	{
+	dummy2++;
+	Binary_Output_Level[object_index][9] = 0;//initializing
+	}
+*/
+
+web_status = params[0].ival;
+
 	if(params[1].ival) {
-//	printf("################ ALERT !!! WRITING by SAE! ################### object_index %d , priority_act %d value %d \n",object_index,priority_act,params[0].ival);
+	printf("################ ALERT !!! WRITING by SAE! ################### object_index %d , priority_act %d value %d \n",object_index,priority_act,params[0].ival);
 	Binary_Output_Level[object_index][priority_act] = params[0].ival;//Value updating in BDT
 	}
 
+}
+
+web_BACnetDev_dowebValueUpdate(SedonaVM* vm, Cell* params)
+{
+	return web_status;
+}
+
+web_BACnetDev_dowebValueReceive(SedonaVM* vm, Cell* params)
+{
+	printf("################ ALERT !!! WRITING by Web Browser! ################### object_index %d , priority_act %d value %d \n",object_index,priority_act,params[0].ival);
+
+
+	Binary_Output_Level[object_index][priority_act] = params[0].ival;//Value updating in BDT
 }
 
 

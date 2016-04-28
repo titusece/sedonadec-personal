@@ -165,7 +165,7 @@ static bool bacnet_status = false;
 	
 
 
-BACnet_BACnetDev_doBacnetInitStatus(SedonaVM* vm, Cell* params)
+web_BACnetDev_doBacnetInitStatus(SedonaVM* vm, Cell* params)
 {
 return bacnet_status;
 }
@@ -188,7 +188,7 @@ int main_test(
     char *argv[])
 {
 */
-Cell BACnet_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
+Cell web_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
 {
   bool bac_opt1 = params[0].ival;
 

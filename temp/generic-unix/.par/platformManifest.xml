@@ -17,7 +17,6 @@
   <nativeKit depend="datetimeStd 1.0+" />
   <nativeKit depend="platUnix 1.0+" />
   <nativeKit depend="rpiDigitalIo 1.0+" />
-  <nativeKit depend="BACnet 1.0+" />
 
   <nativeMethod qname="sys::Sys.platformType" id="0::0" />
   <nativeMethod qname="sys::Sys.copy" id="0::1" />
@@ -102,12 +101,6 @@
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doNow" id="9::0" />
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doSetClock" id="9::1" />
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doGetUtcOffset" id="9::2" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetInit" id="85::0" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetValueStatus" id="85::1" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetPriorityStatus" id="85::2" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetOverrideStatus" id="85::3" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetValueUpdate" id="85::4" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetInitStatus" id="85::5" />
 </natives>
 
 <manifestIncludes>
