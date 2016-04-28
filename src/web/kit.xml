@@ -20,5 +20,15 @@
   <!-- Source Directories -->
   <source dir="."/>
 
+  <!-- Natives -->  
+  <native qname="web::BACnetDev.doBacnetInit"                 id="85::0" />
+  <native qname="web::BACnetDev.doBacnetValueStatus"          id="85::1" />
+  <native qname="web::BACnetDev.doBacnetPriorityStatus"       id="85::2" />
+  <native qname="web::BACnetDev.doBacnetOverrideStatus"       id="85::3" />
+  <native qname="web::BACnetDev.doBacnetValueUpdate"          id="85::4" />
+  <native qname="web::BACnetDev.doBacnetInitStatus"           id="85::5" />
+  <native qname="web::BACnetDev.dowebValueUpdate"           id="85::6" />
+  <native qname="web::BACnetDev.dowebValueReceive"           id="85::7" />
+
 </sedonaKit>
 
