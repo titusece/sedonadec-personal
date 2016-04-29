@@ -17,6 +17,7 @@
   <nativeKit depend="datetimeStd 1.0+" />
   <nativeKit depend="platUnix 1.0+" />
   <nativeKit depend="rpiDigitalIo 1.0+" />
+  <nativeKit depend="web 1.0+" />
 
   <nativeMethod qname="sys::Sys.platformType" id="0::0" />
   <nativeMethod qname="sys::Sys.copy" id="0::1" />
@@ -101,6 +102,14 @@
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doNow" id="9::0" />
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doSetClock" id="9::1" />
   <nativeMethod qname="datetimeStd::DateTimeServiceStd.doGetUtcOffset" id="9::2" />
+  <nativeMethod qname="web::BACnetDev.doBacnetInit" id="85::0" />
+  <nativeMethod qname="web::BACnetDev.doBacnetValueStatus" id="85::1" />
+  <nativeMethod qname="web::BACnetDev.doBacnetPriorityStatus" id="85::2" />
+  <nativeMethod qname="web::BACnetDev.doBacnetOverrideStatus" id="85::3" />
+  <nativeMethod qname="web::BACnetDev.doBacnetValueUpdate" id="85::4" />
+  <nativeMethod qname="web::BACnetDev.doBacnetInitStatus" id="85::5" />
+  <nativeMethod qname="web::BACnetDev.dowebValueUpdate" id="85::6" />
+  <nativeMethod qname="web::BACnetDev.dowebValueReceive" id="85::7" />
 </natives>
 
 <manifestIncludes>

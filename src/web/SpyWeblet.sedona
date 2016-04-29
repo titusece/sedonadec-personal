@@ -50,6 +50,7 @@ class SpyWeblet
     else if (p.equals("sox"))   sox(req, res)
     else if (p.equals("echo"))  echo(req, res)
     else if (p.equals("logs"))  logs(req, res)
+    else if (p.equals("bacnet"))  bacnet(req, res)
     else index(req, res)
 
     // standard footer
@@ -92,6 +93,7 @@ class SpyWeblet
     res.w(" <li><a href='/spy/app'>App</a></li>\n")
     res.w(" <li><a href='/spy/kits'>Kits</a></li>\n")
     res.w(" <li><a href='/spy/logs'>Logging</a></li>\n")
+    res.w(" <li><a href='/spy/bacnet'>Control the BACnet</a></li>\n")
     res.w(" <li><a href='/spy/sox'>SoxService</a></li>\n")
     res.w(" <li><a href='/spy/echo'>Echo Request</a></li>\n")
     res.w(" <li><a href='/spy/backup'>Backup</a></li>\n")
@@ -497,6 +499,85 @@ class SpyWeblet
       res.w("<td><a href='/spy/logs/").wi(log.id).w("/").wi(level).w("'>O</a></td>")
   }
 
+
+
+public void func_test()
+{
+Sys.out.print("WEB services func_test called!\n")
+}
+
+////////////////////////////////////////////////////////////////
+// BACnet
+////////////////////////////////////////////////////////////////
+
+  public void bacnet(WebReq req, WebRes res)
+  {
+
+int test10 = 0;
+int test11 = 0;
+int test12 = 0;
+
+test11 = BACnetDev.doBacnetInitStatus()
+test10 = BACnetDev.dowebValueUpdate()
+
+Sys.out.print("WEB services BACnet test10 $test10 test11 $test11\n")
+                              
+ 
+//    res.w("<table border='1'>\n")
+    res.w("<table border='1'>\n")
+//    res.w("<tr>").th("Object ID").th("In value").th("Priority").w("</tr>\n")
+
+//Titus
+
+res.w("<tr>").th("Status").th("Value").w("</tr>\n")
+res.w("<tr>").w("<td>BACnetBO</td>").td().wi(test10).w("</td>").w("</tr>")
+res.w("<tr>").w("<td>BACnetInit</td>").td().wi(test11).w("</td>").w("</tr>")
+
+//res.w("<tr>").w("<td>Job</td>").w("<td>5000</td>").w("</tr>")
+//res.w("<tr>").w("<td>Daniel</td>").w("<td>8000</td>").w("</tr>")
+
+
+//res.w("<tr>").td().th("BACnetBO Status").w("</td>").td().wi(test10).w("</td>").w("</tr>")
+//res.w("<tr>").td().th("BACnetInit Status").w("</td>").td().wi(test11).w("</td>").w("</tr>")
+//res.w("<tr>").w("<td>Daniel</td>").w("<td>8000</td>").w("</tr>")
+
+    res.w("</table>\n")
+
+//  Quantity:
+//  <input type="number" name="points" min=\"0\" max=\"1\" step=\"1\" value="1">
+
+/*
+res.w("<form onsubmit=\"func_test()\" \"action=\"action_page.php\">").w
+    ("<fieldset>").w
+    ("<legend>BACnet Control:</legend>").w
+    ("Enter the Value:<br>").w
+    ("<input type=\"number\" name=\"value\" min=\"0\" max=\"1\" step=\"1\" value=\"1\">").w
+    ("<br>").w
+    ("<input type=\"submit\" value=\"Submit\">").w
+  ("</fieldset>").w
+("</form>")
+*/
+
+
+/*
+res.w("<form>").w("First name:<br>").w("<input type=\"text\" name=\"firstname\"><br>").w("Last name:<br>").w("<input type=\"text\" name=\"lastname\">").w("</form> ")
+
+
+res.w("<form action=\"action_page.php\">").w("<fieldset>").w
+    ("<legend>Personal information:</legend>").w
+    ("First name:<br>").w
+    ("<input type=\"text\" name=\"firstname\" value=\"Mickey\">").w
+    ("<br>").w
+    ("Last name:<br>").w
+    ("<input type=\"text\" name=\"lastname\" value=\"Mouse\">").w
+    ("<br><br>").w
+    ("<input type=\"submit\" value=\"Submit\">").w
+  ("</fieldset>").w
+("</form>")
+
+*/
+  }                                     
+  
 
 ////////////////////////////////////////////////////////////////
 // Backup
