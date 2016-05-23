@@ -513,6 +513,45 @@ Sys.out.print("WEB services func_test called!\n")
   public void bacnet(WebReq req, WebRes res)
   {
 
+/*
+res.w("<html>")
+res.w("<head>")
+res.w("<title>Rpi LED Changer</title>")
+res.w("<style type=\"text/css\">")
+res.w("p { display: table-cell; }")
+res.w("button { width: 75px; margin: 2px auto; }")
+res.w("</style>")
+res.w("<?php")
+res.w("if (isset($_GET['led']) && isset($_GET['onOff']))")
+res.w("{")
+res.w("$led = $_GET['led'];")
+res.w("$onOff = $_GET['onOff'];")
+res.w("exec( \"/www/cgi-bin/ledctl $led $onOff\" );")
+res.w("}")
+res.w("?>")
+res.w("</head>")
+res.w("<body>")
+res.w("<div style=\"width: 200px; margin: 0px auto;\">")
+res.w("<div style=\"width: 100px; float: left;\">")
+res.w("<p>LED #2:</p>")
+res.w("<button type=\"button\" onclick=\"location.href='ledCtl.php?led=2&onOff=1'\">ON</button>")
+res.w("<button type=\"button\" onclick=\"location.href='ledCtl.php?led=2&onOff=0'\">OFF</button>")
+res.w("</div>")
+res.w("<div sytle=\"width: 100px; margin-left: 100px;\">")
+res.w("<p>LED #3:</p>")
+res.w("<button type=\"button\" onclick=\"location.href='ledCtl.php?led=3&onOff=1'\">ON</button>")
+res.w("<button type=\"button\" onclick=\"location.href='ledCtl.php?led=3&onOff=0'\">OFF</button>")
+res.w("</div>")
+res.w("</div>")
+res.w("</body>")
+res.w("</html>")
+*/
+
+//res.w("<head>")
+//res.w("<title>").w("Test").w("</title>")
+//res.w("</head>")
+
+
 int test10 = 0;
 int test11 = 0;
 int test12 = 0;
@@ -542,6 +581,9 @@ res.w("<tr>").w("<td>BACnetInit</td>").td().wi(test11).w("</td>").w("</tr>")
 //res.w("<tr>").w("<td>Daniel</td>").w("<td>8000</td>").w("</tr>")
 
     res.w("</table>\n")
+
+
+
 
 //  Quantity:
 //  <input type="number" name="points" min=\"0\" max=\"1\" step=\"1\" value="1">
