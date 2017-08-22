@@ -216,7 +216,7 @@ void my_message_callback(struct mosquitto *mosq, void *obj, const struct mosquit
 			printf("%s ", message->topic);
 //			fwrite(message->payload, 1, message->payloadlen, stdout);
 			if(cfg->eol){
-				printf("\n");
+//				printf("\n");
 			}
 		}else{
 			if(cfg->eol){
@@ -228,7 +228,7 @@ void my_message_callback(struct mosquitto *mosq, void *obj, const struct mosquit
 		if(message->payloadlen){
 //			fwrite(message->payload, 1, message->payloadlen, stdout);
 			if(cfg->eol){
-				printf("\n");
+//				printf("\n");
 			}
 			fflush(stdout);
 		}
