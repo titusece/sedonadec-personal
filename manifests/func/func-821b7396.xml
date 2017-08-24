@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="Basic function block library"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:04.709+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:47.314+05:30"
 >
 
 <!-- Dependencies -->
@@ -54,15 +54,15 @@
   <slot id="2" name="preset" type="int" flags="c" default="0">
     <facets>
       <int name="min" val="0"/>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="dir" type="bool" flags="c" default="true">
     <facets>
-      <bool name="config" val="true"/>
       <str name="falseText" val="down"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
       <str name="trueText" val="up"/>
     </facets>
   </slot>
@@ -79,15 +79,15 @@
   <slot id="0" name="pps" type="float">
     <facets>
       <str name="unit" val="per_second"/>
-      <int name="precision" val="3"/>
       <bool name="readonly" val="true"/>
+      <int name="precision" val="3"/>
     </facets>
   </slot>
   <slot id="1" name="ppm" type="float">
     <facets>
       <str name="unit" val="per_minute"/>
-      <int name="precision" val="3"/>
       <bool name="readonly" val="true"/>
+      <int name="precision" val="3"/>
     </facets>
   </slot>
   <slot id="2" name="in" type="bool"/>
@@ -106,14 +106,14 @@
   </slot>
   <slot id="2" name="risingEdge" type="float" flags="c" default="50.0">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="fallingEdge" type="float" flags="c" default="50.0">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
@@ -146,9 +146,9 @@
   </slot>
   <slot id="4" name="secs" type="long" flags="c" default="1">
     <facets>
+      <str name="unit" val="second"/>
       <int name="min" val="1"/>
       <bool name="config" val="true"/>
-      <str name="unit" val="second"/>
     </facets>
   </slot>
 </type>
@@ -188,17 +188,17 @@
   </slot>
   <slot id="5" name="ki" type="float" flags="c" default="0.0">
     <facets>
+      <str name="unit" val="per_minute"/>
       <float name="min" val="0.0"/>
       <bool name="config" val="true"/>
-      <str name="unit" val="per_minute"/>
       <int name="precision" val="6"/>
     </facets>
   </slot>
   <slot id="6" name="kd" type="float" flags="c" default="0.0">
     <facets>
+      <str name="unit" val="second"/>
       <float name="min" val="0.0"/>
       <bool name="config" val="true"/>
-      <str name="unit" val="second"/>
       <int name="precision" val="6"/>
     </facets>
   </slot>
@@ -234,9 +234,9 @@
   </slot>
   <slot id="12" name="exTime" type="int" flags="c" default="1000">
     <facets>
+      <str name="unit" val="millisecond"/>
       <int name="min" val="0"/>
       <bool name="config" val="true"/>
-      <str name="unit" val="millisecond"/>
     </facets>
   </slot>
 </type>
@@ -399,16 +399,16 @@
   </slot>
   <slot id="3" name="period" type="float" flags="c" default="10.0">
     <facets>
+      <str name="unit" val="second"/>
       <int name="min" val="0"/>
       <bool name="config" val="true"/>
-      <str name="unit" val="second"/>
       <int name="precision" val="0"/>
     </facets>
   </slot>
   <slot id="4" name="rampType" type="bool" flags="c" default="true">
     <facets>
-      <bool name="config" val="true"/>
       <str name="falseText" val="sawtooth"/>
+      <bool name="config" val="true"/>
       <str name="trueText" val="triangle"/>
     </facets>
   </slot>
@@ -440,10 +440,10 @@
   </slot>
   <slot id="1" name="ticksPerSec" type="int" flags="c" default="1">
     <facets>
-      <int name="min" val="1"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="per_second"/>
+      <int name="min" val="1"/>
       <int name="max" val="10"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>

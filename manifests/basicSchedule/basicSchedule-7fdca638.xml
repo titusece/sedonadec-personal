@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="basic schedule functions"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:04.060+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:45.750+05:30"
 >
 
 <!-- Dependencies -->
@@ -21,30 +21,30 @@
 <type id="0" name="DailySchedule" sizeof="48" flags="a" base="sys::Component">
   <slot id="0" name="start1" type="short" flags="c">
     <facets>
-      <bool name="config" val="true"/>
       <str name="unit" val="minute"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="1" name="dur1" type="short" flags="c">
     <facets>
-      <int name="min" val="0"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="minute"/>
+      <int name="min" val="0"/>
       <int name="max" val="1440"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="2" name="start2" type="short" flags="c">
     <facets>
-      <bool name="config" val="true"/>
       <str name="unit" val="minute"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="dur2" type="short" flags="c">
     <facets>
-      <int name="min" val="0"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="minute"/>
+      <int name="min" val="0"/>
       <int name="max" val="1440"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>

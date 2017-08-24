@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="Timing function block library"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:05.046+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:48.659+05:30"
 >
 
 <!-- Dependencies -->
@@ -30,8 +30,8 @@
   <slot id="2" name="delayTime" type="float" flags="c">
     <facets>
       <bool name="summary" val="true"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="second"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="hold" type="int">
@@ -56,8 +56,8 @@
   <slot id="2" name="delayTime" type="float" flags="c">
     <facets>
       <bool name="summary" val="true"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="second"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="hold" type="int">
@@ -81,9 +81,9 @@
   <slot id="1" name="in" type="bool"/>
   <slot id="2" name="pulseWidth" type="float" flags="c">
     <facets>
+      <str name="unit" val="second"/>
       <int name="min" val="0"/>
       <bool name="config" val="true"/>
-      <str name="unit" val="second"/>
     </facets>
   </slot>
   <slot id="3" name="canRetrig" type="bool" flags="c">
@@ -113,8 +113,8 @@
   <slot id="2" name="time" type="int" flags="c">
     <facets>
       <bool name="summary" val="true"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="second"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="left" type="int">

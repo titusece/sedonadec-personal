@@ -14,6 +14,7 @@
     <nativeKit depend="datetimeStd 1.0+" />
     <nativeKit depend="platUnix 1.0+" />
     <nativeKit depend="rpiDigitalIo 1.0+" />
+    <nativeKit depend="BBBDigitalIo 1.0+" />
     <nativeKit depend="BACnet 1.0+" />
     <nativeKit depend="i2c 1.0+" />
     <nativeKit depend="mqttNew 1.0+" />
@@ -28,6 +29,7 @@
     <nativeSource path="/src/inet/native/sha1" />
     <nativeSource path="/src/datetimeStd/native/std" />
     <nativeSource path="/src/rpiDigitalIo/native" />
+    <nativeSource path="/src/BBBDigitalIo/native" />
     <nativeSource path="/src/BACnet/native" />
     <nativeSource path="/src/i2c/native" />
     <nativeSource path="/src/mqttNew/native" />

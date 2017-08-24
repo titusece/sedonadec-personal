@@ -17,6 +17,7 @@
   <nativeKit depend="datetimeStd 1.0+" />
   <nativeKit depend="platUnix 1.0+" />
   <nativeKit depend="rpiDigitalIo 1.0+" />
+  <nativeKit depend="BBBDigitalIo 1.0+" />
   <nativeKit depend="BACnet 1.0+" />
   <nativeKit depend="i2c 1.0+" />
   <nativeKit depend="mqttNew 1.0+" />
@@ -145,6 +146,9 @@
   <nativeMethod qname="mqttNew::MqttNew.doMqttNewSubscriberMsg" id="96::6" />
   <nativeMethod qname="mqttNew::MqttNew.doMqttNewNetworkStatus_Sub" id="96::7" />
   <nativeMethod qname="mqttNew::MqttNew.doMqttNewRead_Topic" id="96::8" />
+  <nativeMethod qname="BBBDigitalIo::Dio_BBB.doInit" id="97::0" />
+  <nativeMethod qname="BBBDigitalIo::Dio_BBB.doRead" id="97::1" />
+  <nativeMethod qname="BBBDigitalIo::Dio_BBB.doWrite" id="97::2" />
 </natives>
 
 <manifestIncludes>

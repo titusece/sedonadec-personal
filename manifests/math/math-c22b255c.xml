@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="Math function block library"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:04.975+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:48.354+05:30"
 >
 
 <!-- Dependencies -->
@@ -49,8 +49,8 @@
   <slot id="1" name="in" type="float"/>
   <slot id="2" name="maxTime" type="int" flags="c" default="0">
     <facets>
-      <bool name="config" val="true"/>
       <str name="unit" val="millisecond"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
@@ -204,8 +204,8 @@
   </facets>
   <slot id="0" name="out" type="float">
     <facets>
-      <int name="precision" val="1"/>
       <bool name="readonly" val="true"/>
+      <int name="precision" val="1"/>
     </facets>
   </slot>
   <slot id="1" name="in" type="float">
@@ -216,8 +216,8 @@
   <slot id="2" name="decimalPlaces" type="int" flags="c" default="0">
     <facets>
       <int name="min" val="-1"/>
-      <bool name="config" val="true"/>
       <int name="max" val="3"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
@@ -256,8 +256,8 @@
   <slot id="2" name="time" type="int" flags="c" default="10000">
     <facets>
       <bool name="summary" val="true"/>
-      <bool name="config" val="true"/>
       <str name="unit" val="millisecond"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="reset" type="void" flags="a"/>

@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="Support for Raspberry Pi BACnet control"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:05.197+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:49.504+05:30"
 >
 
 <!-- Dependencies -->
@@ -30,14 +30,14 @@
   </slot>
   <slot id="2" name="Out" type="float" default="0.0">
     <facets>
-      <bool name="readonly" val="true"/>
       <bool name="allowNull" val="true"/>
+      <bool name="readonly" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="ObjectID" type="int" flags="c" default="-1">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
@@ -56,14 +56,14 @@
   </slot>
   <slot id="2" name="Out" type="float" default="0.0">
     <facets>
-      <bool name="readonly" val="true"/>
       <bool name="allowNull" val="true"/>
+      <bool name="readonly" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="ObjectID" type="int" flags="c" default="-1">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
@@ -72,8 +72,8 @@
 <type id="2" name="BACnetBO" sizeof="84" base="sys::Component">
   <slot id="0" name="Priority" type="int" flags="c" default="10">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="1" name="In" type="bool" flags="c" default="false">
@@ -83,8 +83,8 @@
   </slot>
   <slot id="2" name="Out" type="bool" default="false">
     <facets>
-      <bool name="readonly" val="true"/>
       <bool name="allowNull" val="true"/>
+      <bool name="readonly" val="true"/>
     </facets>
   </slot>
   <slot id="3" name="ObjectID" type="int" flags="c" default="-1">
@@ -98,8 +98,8 @@
 <type id="3" name="BACnetInit" sizeof="48" base="sys::Component">
   <slot id="0" name="BAC_EN" type="bool" flags="c" default="false">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
   <slot id="1" name="PORT_NO" type="int" flags="c" default="47808">

@@ -1,0 +1,133 @@
+// History:
+//   22 Aug 17  Titus  creation
+
+
+**
+** DioIn models a general purpose digital input
+**
+//@niagaraIcon="module://icons/x16/io.png"
+class DioIn_BBB
+  extends Component    
+{
+
+  //////////////////////////////////////////////////////////////////////////
+  // Properties
+  //////////////////////////////////////////////////////////////////////////
+
+  ** Which physical DIO this corresponds to
+  @defaultOnClone
+  @config property int  dioNum = -1           // -1 is uninitialized/invalid
+
+  @config property int  portNum = -1           // 8 and 9
+
+  ** Whether the reported value will be same as hardware or inverted;
+  ** defaults to false (not inverted).
+  @config property bool invert = false   
+
+  ** Last known value of the hardware input
+  @readonly @allowNull property bool out  = null
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Component methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initialize the component
+  **
+  virtual override void start()
+  {
+
+//Sys.out.print("SEDONA: STARTED!\n")
+
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() ) 
+      return                     
+
+    // If init succeeds, set isInit true
+    isInit = init( dioNum, portNum )
+
+    return
+  }
+
+
+  **
+  ** Read the DIO and update value of out.
+  **
+  virtual override void execute()
+  {
+    // If not yet initialized, do that first
+    if (!isInit) 
+    {
+      start()
+      return
+    }
+
+    int rc = read()
+
+Sys.out.print("SEDONA: dioNum -> $dioNum ; rc -> $rc\n") 
+
+    if (rc<0) 
+      out := null
+    else 
+      out := (rc!=0)
+
+    return
+  }
+
+
+  **
+  ** Respond as needed to changes in property values.
+  ** 
+  override void changed(Slot slot)
+  {
+    super.changed(slot)
+
+    // Don't respond to prop changes while app is loading
+    if (!Sys.app.isRunning()) return
+
+    // If DIO# changes, re-init the DIO
+    if (slot == DioIn_BBB.dioNum)
+      isInit = false
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Public Dio methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initialize the DIO input based on arg values.  Sets config properties to args.
+  **
+  public bool init(int dio, int portNum)
+  {
+    dioNum := dio
+
+    return Dio_BBB.doInit( dioNum, portNum, Dio_BBB.INPUT ) >= 0
+  }
+
+
+  **
+  ** Read the DIO value.  Returns 0 or 1 according to physical DIO value, or -1 
+  ** if doRead returns error.  Returns inverted DIO value if invert==true. 
+  **
+  public int read()
+  {
+    int val = Dio_BBB.doRead( dioNum, portNum )
+    if (val<0) return val
+
+    if (invert)
+      return val==0 ? 1 : 0
+    else
+      return val
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Fields
+  //////////////////////////////////////////////////////////////////////////
+
+  bool isInit = false
+
+}
+

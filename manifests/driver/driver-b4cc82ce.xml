@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="general driver"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:03.631+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:44.879+05:30"
 >
 
 <!-- Dependencies -->
@@ -22,8 +22,8 @@
   <slot id="1" name="status" type="int" default="0"/>
   <slot id="2" name="address" type="int" flags="c" default="0">
     <facets>
-      <bool name="config" val="true"/>
       <bool name="defaultOnClone" val="true"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
@@ -67,8 +67,8 @@
 <type id="4" name="DeviceNetwork" sizeof="48" base="sys::Service">
   <slot id="0" name="pingTimeSec" type="int" flags="c" default="30">
     <facets>
-      <bool name="config" val="true"/>
       <str name="unit" val="second"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>

@@ -83,6 +83,35 @@
 
 #include "gpio.h"
 
+#include "BBBiolib.h"//GPIO lib for BBB
+
+struct gpio_def{
+	int bbb_port;
+	int bbb_pin;
+};
+
+static struct gpio_def bacnet_gpios[] = {
+	{
+		.bbb_port = 8,
+		.bbb_pin = 12,				
+	},
+
+	{
+		.bbb_port = 8,
+		.bbb_pin = 11,				
+	},
+
+	{
+		.bbb_port = 8,
+		.bbb_pin = 16,				
+	},
+
+	{
+		.bbb_port = 9,
+		.bbb_pin = 12,				
+	},
+
+};
 
 /** @file server/main.c  Example server application using the BACnet Stack. */
 
@@ -193,8 +222,13 @@ int main_test(
 BACnet_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
 {
   bool bac_opt1 = params[0].ival;
+  int i;
 
-//	printf("BACnet_BACnetDev_doBacnetInit %d\n",bac_opt1);
+	iolib_init();//GPIO initialized for BBB//Titus
+
+	for(i = 0; i < MAX_BINARY_OUTPUTS; i++)
+		iolib_setdir(bacnet_gpios[i].bbb_port,bacnet_gpios[i].bbb_pin, BBBIO_DIR_OUT);
+
 
 	if(bac_opt1)
 	{

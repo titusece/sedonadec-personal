@@ -1,0 +1,116 @@
+// History:
+//   22 Aug 17  Titus  creation
+
+
+**
+** DioOut models a general purpose digital output
+**
+//@niagaraIcon="module://icons/x16/io.png"
+class DioOut_BBB
+  extends Component    
+{
+
+  //////////////////////////////////////////////////////////////////////////
+  // Properties
+  //////////////////////////////////////////////////////////////////////////
+
+  ** Which physical DIO this corresponds to
+  @defaultOnClone
+  @config property int  dioNum = -1           // -1 is uninitialized/invalid
+
+  @config property int  portNum = -1           // 8 and 9
+
+  ** Whether the value will be inverted before writing to hardware;
+  ** defaults to false (not inverted).
+  @config property bool invert = false   
+
+  ** Value to be written to the hardware output
+  property bool in = null
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Component methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initialize the component
+  **
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() || (in==null) ) 
+      return                     
+
+    // If init succeeds, set isInit true
+    isInit = init( dioNum, portNum, in )
+
+    return
+  }
+
+
+  **
+  ** Write current value of in to the DIO output
+  **
+  virtual override void execute()
+  {
+    // If not yet initialized, do that first
+    if (isInit) 
+      write(in) 
+    else 
+      start()
+    return
+  }
+
+
+  **
+  ** Respond as needed to changes in property values.
+  ** 
+  override void changed(Slot slot)
+  {
+    super.changed(slot)
+
+    // Don't respond to prop changes while app is loading
+    if (!Sys.app.isRunning()) return
+
+    // If DIO# changes, force re-init 
+    if (slot == DioOut_BBB.dioNum)
+      isInit = false
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Public Dio methods
+  //////////////////////////////////////////////////////////////////////////
+
+  **
+  ** Initializes the DIO as an output, with initial value bValue.
+  ** Returns true on success, false on failure.
+  **
+  bool init(int dio, int port, bool bValue)
+  {
+    // Init the value before we set DIO as output
+    Dio_BBB.doWrite( dio, port, invert ^ bValue )
+
+    return Dio_BBB.doInit( dio, port, Dio_BBB.OUTPUT ) >= 0
+  }
+
+
+  **
+  ** Writes bValue to the DIO, or inverse of bValue if invert==true.
+  ** Returns true on success, false on failure.
+  **
+  bool write(bool bValue)
+  {
+    int rc = Dio_BBB.doWrite( dioNum, portNum, invert ^ bValue )
+    return rc>=0
+  }
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // Fields
+  //////////////////////////////////////////////////////////////////////////
+
+  bool isInit = false
+
+}
+

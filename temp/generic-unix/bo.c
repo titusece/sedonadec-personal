@@ -40,10 +40,40 @@
 #include "handlers.h"
 
 #include "sedona.h"
+#include "BBBiolib.h"
 
 #ifndef MAX_BINARY_OUTPUTS
 #define MAX_BINARY_OUTPUTS 4
 #endif
+
+
+struct gpio_def{
+	int bbb_port;
+	int bbb_pin;
+};
+
+static struct gpio_def bacnet_gpios[] = {
+	{
+		.bbb_port = 8,
+		.bbb_pin = 12,				
+	},
+
+	{
+		.bbb_port = 8,
+		.bbb_pin = 11,				
+	},
+
+	{
+		.bbb_port = 8,
+		.bbb_pin = 16,				
+	},
+
+	{
+		.bbb_port = 9,
+		.bbb_pin = 12,				
+	},
+
+};
 
 static unsigned int level2 = 0;
 static bool priority_change = false;
@@ -554,6 +584,14 @@ BACNET_BINARY_PV level = BINARY_NULL;
             }
 		//Titus: Get the latest value and send to Sedona
 		level2 = Binary_Output_Present_Value(object_index);
+
+		printf("LEVEL2 %d\n",level2);
+
+		if(level2 == 1)
+			pin_high(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
+		else
+			pin_low(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
+
 
             break;
         case PROP_OUT_OF_SERVICE:

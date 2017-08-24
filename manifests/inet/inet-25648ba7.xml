@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="IP and UDP/TCP Socket APIs"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:02.654+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:41.877+05:30"
 >
 
 <!-- Dependencies -->

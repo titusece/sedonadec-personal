@@ -7,8 +7,8 @@
    version="1.2.28"
    vendor="Tridium"
    description="Support for managing logs"
-   buildHost="titus-laptop"
-   buildTime="2016-08-01T23:11:04.313+05:30"
+   buildHost="titus-PC"
+   buildTime="2017-08-23T21:35:46.355+05:30"
 >
 
 <!-- Dependencies -->
@@ -24,15 +24,15 @@
   <slot id="0" name="logName" type="sys::Buf" flags="cs">
     <facets>
       <bool name="asStr" val="true"/>
+      <bool name="readonly" val="true"/>
       <bool name="config" val="true"/>
       <int name="max" val="64"/>
-      <bool name="readonly" val="true"/>
     </facets>
   </slot>
   <slot id="1" name="logLevel" type="int" flags="c" default="3">
     <facets>
-      <bool name="config" val="true"/>
       <str name="range" val="none, error, warning, message, trace"/>
+      <bool name="config" val="true"/>
     </facets>
   </slot>
 </type>
