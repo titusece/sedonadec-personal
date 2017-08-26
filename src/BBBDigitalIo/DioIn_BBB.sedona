@@ -65,7 +65,7 @@ class DioIn_BBB
 
     int rc = read()
 
-Sys.out.print("SEDONA: dioNum -> $dioNum ; rc -> $rc\n") 
+//Sys.out.print("SEDONA: dioNum -> $dioNum ; rc -> $rc\n")
 
     if (rc<0) 
       out := null

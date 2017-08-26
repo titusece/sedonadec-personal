@@ -20,6 +20,7 @@
 
   <!-- Natives -->
 
+
   <!-- BACnet fns -->
   <native qname="BACnet::BACnetDev.doBacnetInit"                   id="85::0" />
   <native qname="BACnet::BACnetDev.doBacnetInitStatus"             id="85::1" />

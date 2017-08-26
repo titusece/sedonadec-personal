@@ -29,7 +29,7 @@ class BACnetInit
 //Initialize the BACnet stack with Port No and Device ID
 	public void init()
 	{
-	Sys.out.print("SEDONA: $name : BACnet stack is initializing...\n")
+	Sys.out.print("SEDONA: $name : BACnet stack is initializing... \n")
 	BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
 	BACnetDev.doBacnetSendPort(PORT_NO)
 	BACnetDev.doBacnetInit(BAC_EN)
@@ -52,8 +52,10 @@ class BACnetInit
 	Sys.out.print("SEDONA: $name : BACnetInit app Started!\n")
 
 		// Don't touch hardware until input value is valid
-		if ( !Sys.app.isSteadyState() ) 
+		if ( !Sys.app.isSteadyState() ) {
+	Sys.out.print("SEDONA: $name : BACnet stack is start\n")
 		return
+		}
 
 	//Initialize the stack with PORT No and Device ID.
 	init()
@@ -91,6 +93,16 @@ class BACnetInit
 
 	}
 
+ virtual override void execute()
+  {
+	if(count == 0 && BAC_EN ) {
+		BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
+		BACnetDev.doBacnetSendPort(PORT_NO)
+		BACnetDev.doBacnetInit(BAC_EN)
+	}
+	count++;
+  }
+
 
 //Function for App stop
 	virtual override void stop()
@@ -100,5 +112,8 @@ class BACnetInit
 	BACnetDev.doBacnetInit(false)
 	}
 
+
+bool exe_en = false;
+int count = 0;
 
 }

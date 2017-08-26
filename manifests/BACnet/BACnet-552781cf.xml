@@ -8,7 +8,7 @@
    vendor="Tridium"
    description="Support for Raspberry Pi BACnet control"
    buildHost="titus-PC"
-   buildTime="2017-08-23T21:35:49.504+05:30"
+   buildTime="2017-08-26T20:34:55.395+05:30"
 >
 
 <!-- Dependencies -->
@@ -95,7 +95,7 @@
 </type>
 
 <!-- BACnet::BACnetInit -->
-<type id="3" name="BACnetInit" sizeof="48" base="sys::Component">
+<type id="3" name="BACnetInit" sizeof="52" base="sys::Component">
   <slot id="0" name="BAC_EN" type="bool" flags="c" default="false">
     <facets>
       <bool name="defaultOnClone" val="true"/>

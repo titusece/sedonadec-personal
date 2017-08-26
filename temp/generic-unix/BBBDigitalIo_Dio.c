@@ -158,11 +158,11 @@ Cell BBBDigitalIo_Dio_BBB_doRead(SedonaVM* vm, Cell* params)
 
   if (is_high(whichPort,whichDio)) {
 //    printf("native:Dio_BBB.doRead( IS_HIGH P%d:%d )\n", whichPort, whichDio); 
-    return zeroCell;
+    return oneCell;//
   }
   if (is_low(whichPort,whichDio)) {
 //    printf("native:Dio_BBB.doRead( IS_LOW P%d:%d )\n", whichPort, whichDio); 
-    return oneCell;
+    return zeroCell;//
   }
 
 

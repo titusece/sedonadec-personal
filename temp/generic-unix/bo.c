@@ -237,6 +237,13 @@ BACNET_BINARY_PV Binary_Output_Present_Value(
 	//Titus : updating the "level2" variable to sending the value to SAE (Sedona Application Editor).
 	level2 = value;
 
+	//BBB control
+	if(level2 == 1)
+		pin_high(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
+	else
+		pin_low(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
+
+
 //	printf("Binary_Output_Present_Value: VALUE %d, sent to SAE! ObjectID %d\n",value,object_instance);
                 break;
             }
@@ -587,6 +594,7 @@ BACNET_BINARY_PV level = BINARY_NULL;
 
 		printf("LEVEL2 %d\n",level2);
 
+		//BBB control
 		if(level2 == 1)
 			pin_high(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
 		else
