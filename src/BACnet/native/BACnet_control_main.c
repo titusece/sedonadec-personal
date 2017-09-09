@@ -90,28 +90,89 @@ struct gpio_def{
 	int bbb_pin;
 };
 
-static struct gpio_def bacnet_gpios[] = {
+
+static struct gpio_def bacnet_bo_gpios[] = {
 	{
-		.bbb_port = 8,
+		.bbb_port = 0,//BO_0 : P0_0 //Dummy
+		.bbb_pin = 0,				
+	},
+
+	{
+		.bbb_port = 8,//BO_1 : P8_12
 		.bbb_pin = 12,				
 	},
 
 	{
-		.bbb_port = 8,
+		.bbb_port = 8,//BO_2 : P8_11
 		.bbb_pin = 11,				
 	},
 
 	{
-		.bbb_port = 8,
+		.bbb_port = 8,//BO_3 : P8_16
 		.bbb_pin = 16,				
 	},
 
 	{
-		.bbb_port = 9,
-		.bbb_pin = 12,				
+		.bbb_port = 8,//BO_4 : P8_15
+		.bbb_pin = 15,				
+	},
+};
+
+static struct gpio_def bacnet_bi_gpios[] = {
+	{
+		.bbb_port = 0,//BI_0 : P0_0 //Dummy
+		.bbb_pin = 0,				
 	},
 
+	{
+		.bbb_port = 8,//BI_1 : P8_7
+		.bbb_pin = 7,				
+	},
+
+	{
+		.bbb_port = 8,//BI_2 : P8_8
+		.bbb_pin = 8,				
+	},
+
+	{
+		.bbb_port = 8,//BI_3 : P8_10
+		.bbb_pin = 10,				
+	},
+
+	{
+		.bbb_port = 8,//BI_4 : P8_9
+		.bbb_pin = 9,				
+	},
 };
+
+/*
+static struct gpio_def bacnet_ao_gpios[] = {
+	{
+		.bbb_port = 9,//AO_0 : P8_12
+		.bbb_pin = 16,				
+	},
+
+	{
+		.bbb_port = 9,//AO_1 : P8_12
+		.bbb_pin = 14,				
+	},
+
+	{
+		.bbb_port = 9,//AO_2 : P8_12
+		.bbb_pin = 42,				
+	},
+
+	{
+		.bbb_port = 8,//AO_3 : P8_12
+		.bbb_pin = 13,				
+	},
+
+	{
+		.bbb_port = 8,//AO_4 : P8_12
+		.bbb_pin = 19,				
+	},
+};
+*/
 
 /** @file server/main.c  Example server application using the BACnet Stack. */
 
@@ -226,9 +287,13 @@ BACnet_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
 
 	iolib_init();//GPIO initialized for BBB//Titus
 
-	for(i = 0; i < MAX_BINARY_OUTPUTS; i++)
-		iolib_setdir(bacnet_gpios[i].bbb_port,bacnet_gpios[i].bbb_pin, BBBIO_DIR_OUT);
+	for(i = 1; i < MAX_BINARY_OUTPUTS; i++) {//Ignore the first entry
+		iolib_setdir(bacnet_bo_gpios[i].bbb_port,bacnet_bo_gpios[i].bbb_pin, BBBIO_DIR_OUT);
+	}
 
+	for(i = 1; i < MAX_BINARY_INPUTS; i++) {//Ignore the first entry
+		iolib_setdir(bacnet_bi_gpios[i].bbb_port,bacnet_bi_gpios[i].bbb_pin, BBBIO_DIR_IN);
+	}
 
 	if(bac_opt1)
 	{

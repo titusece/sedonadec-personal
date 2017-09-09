@@ -38,10 +38,43 @@
 #include "config.h"     /* the custom stuff */
 #include "bi.h"
 #include "handlers.h"
+#include "BBBiolib.h"
 
 #ifndef MAX_BINARY_INPUTS
 #define MAX_BINARY_INPUTS 5
 #endif
+
+struct gpio_def{
+	int bbb_port;
+	int bbb_pin;
+};
+
+static struct gpio_def bacnet_bi_gpios[] = {
+	{
+		.bbb_port = 0,//BI_0 : P0_0 //Dummy
+		.bbb_pin = 0,				
+	},
+
+	{
+		.bbb_port = 8,//BI_1 : P8_7
+		.bbb_pin = 7,				
+	},
+
+	{
+		.bbb_port = 8,//BI_2 : P8_8
+		.bbb_pin = 8,				
+	},
+
+	{
+		.bbb_port = 8,//BI_3 : P8_10
+		.bbb_pin = 10,				
+	},
+
+	{
+		.bbb_port = 8,//BI_4 : P8_9
+		.bbb_pin = 9,				
+	},
+};
 
 /* stores the current value */
 static BACNET_BINARY_PV Present_Value[MAX_BINARY_INPUTS];
@@ -140,6 +173,17 @@ void Binary_Input_Init(
     return;
 }
 
+static char BBBIO_get_new(char port, char pin)
+{
+	char val;
+	if (is_high(port, pin))
+		val = 1;
+	else
+		val = 0;
+
+	return val;
+}
+
 /* we simply have 0-n object instances.  Yours might be */
 /* more complex, and then you need to return the index */
 /* that correlates to the correct instance number */
@@ -163,7 +207,16 @@ BACNET_BINARY_PV Binary_Input_Present_Value(
 
     index = Binary_Input_Instance_To_Index(object_instance);
     if (index < MAX_BINARY_INPUTS) {
-        value = Present_Value[index];
+
+	if (index == 0 || index < 0)//Ignore the first entry
+	        value = Present_Value[index];
+	else
+	        value = BBBIO_get_new(bacnet_bi_gpios[index].bbb_port,bacnet_bi_gpios[index].bbb_pin);
+
+//        value = Present_Value[index];
+//	is_high(bacnet_bi_gpios[index].bbb_port,bacnet_bi_gpios[index].bbb_pin)
+
+
         if (Polarity[index] != POLARITY_NORMAL) {
             if (value == BINARY_INACTIVE) {
                 value = BINARY_ACTIVE;

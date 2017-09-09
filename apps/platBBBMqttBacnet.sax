@@ -20,7 +20,8 @@
   <kit name='timing' />
   <kit name='types' />
 
-  <kit name='BBBDigitalIo' />
+<!--  <kit name='BBBDigitalIo' />-->
+
   <kit name='BACnet' />
   <kit name='i2c' />
   <kit name='mqttNew' />
@@ -81,6 +82,11 @@
     </comp>
   </comp>
 
+
+    <!-- BACnet Server -->
+    
+    <comp name="BACser" type="BACnet::BACnetInit">
+    </comp>
 
 <!--
     BACnet Server

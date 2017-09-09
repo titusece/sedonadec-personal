@@ -31,7 +31,8 @@
   <depend on="types 1.2"   />
 
   <!-- BBB GPIO kit -->
-  <depend on="BBBDigitalIo 1.2" />
+<!--  <depend on="BBBDigitalIo 1.2" /> -->
+
   <depend on="BACnet 1.2" />
   <depend on="i2c 1.2" />
   <depend on="mqttNew 1.2" />

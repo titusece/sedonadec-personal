@@ -35,6 +35,7 @@ virtual void loaded()
       return
 
 	Sys.out.print("SEDONA: $name : \"BACnetAO\" App Started!\n")
+	count_arr[ObjectID] = 0;
    return
 
   }
@@ -102,7 +103,12 @@ virtual void loaded()
  virtual override void execute()
   {
 
-//Sys.out.print("SEDONA: $name : \"BACnetAO\" App Executing...!\n") 
+	if (count_arr[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetAO\" App Executing...!\n") 
+	}
+
+count_arr[ObjectID] = 1;
 
 ret3 = BACnetDev.doBacnetInitStatus()
 
@@ -168,5 +174,7 @@ inline static int[5] ia
 bool objID_status = false;
 int ret6 = 9;
 float ret7 = 0.0;
+static int count = 0;
+inline static int[5] count_arr;
 
 }

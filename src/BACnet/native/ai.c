@@ -40,11 +40,24 @@
 #include "timestamp.h"
 #include "ai.h"
 
+#include "sedona.h"
+
+#include <unistd.h>
+#include <stdlib.h>  
+#include <string.h>  
+#include <unistd.h>     //close()  
+#include <fcntl.h>     //define O_WONLY and O_RDONLY  
+#define MAX_BUF 64     //This is plenty large  
+
 
 #ifndef MAX_ANALOG_INPUTS
 #define MAX_ANALOG_INPUTS 4
 #endif
 
+//Function declarations  
+int readADC(unsigned int pin);
+volatile static float level2_ao = 0.0;
+static float level2_ao_new = 0.0;
 
 ANALOG_INPUT_DESCR AI_Descr[MAX_ANALOG_INPUTS];
 
@@ -110,6 +123,10 @@ void Analog_Input_Init(
 #if defined(INTRINSIC_REPORTING)
     unsigned j;
 #endif
+
+//Titus
+	system("echo BB-ADC > /sys/devices/platform/bone_capemgr/slots");
+	printf("Analog Input init done!\n");
 
     for (i = 0; i < MAX_ANALOG_INPUTS; i++) {
         AI_Descr[i].Present_Value = 0.0f;
@@ -196,11 +213,88 @@ float Analog_Input_Present_Value(
 
     index = Analog_Input_Instance_To_Index(object_instance);
     if (index < MAX_ANALOG_INPUTS) {
+	if(index < 0 || index == 0) //Ignore the first entry
+		goto loop;
+	AI_Descr[index].Present_Value = readADC(index);//Titus
+	printf("%s:%d ADC value (AI_%d) %f\n", __func__, __LINE__, index, AI_Descr[index].Present_Value);
+loop:
         value = AI_Descr[index].Present_Value;
     }
 
+    printf("%s:%d PROBE2 ADC value (AI_%d) %f\n", __func__, __LINE__, index, value);
     return value;
 }
+
+#if 0
+/* Titus : return the instance or ObjectID to Sedona for which is received override event */
+Cell BACnet_BACnetDev_doBacnetAIValueStatus(SedonaVM* vm, Cell* params)
+{
+	Cell result;
+	if(params[0].ival < 0) 
+		goto loop;
+	level2_ao_new = AI_Descr[params[0].ival].Present_Value = readADC(params[0].ival);
+//	usleep(1000);
+	sleep(1);
+loop:
+//	printf("BACNET: BACnet_BACnetDev_doBacnetAIValueStatus: level2_ao_new : %f\n",level2_ao_new);
+	result.fval = level2_ao_new;
+	return result;
+
+}
+
+
+/* Titus : Write the value again if ObjectID is changed */
+BACnet_BACnetDev_doBacnetAIObjectIdUpdate(SedonaVM* vm, Cell* params)
+{
+	float val = 0.0;
+	int pri = 9;
+
+//	pri = Analog_Output_Present_Value_Sedona(params[0].ival);
+	val = AI_Descr[params[0].ival].Present_Value;
+
+	printf("BACnet: BACnet_BACnetDev_doBacnetAIObjectIdUpdate  ObjectID %d, Value in Sedona %f, Value in BACnet %f\n",params[0].ival,params[1].fval,val);
+
+	printf("BACnet : BACnet_BACnetDev_doBacnetAI-ObjectIdUpdate : Writing the value for changed ObjectID...  Priority %d, New ObjectID %d, Value %f\n",pri,params[0].ival,params[1].fval);
+	AI_Descr[params[0].ival].Present_Value = params[1].fval;//Value updating in BDT
+
+	return pri;
+}
+
+/* Titus : Backup the objectID */
+Cell BACnet_BACnetDev_doBacnetAIObjectIdBkp(SedonaVM* vm, Cell* params)
+{
+Cell val;
+val.fval = AI_Descr[params[0].ival].Present_Value;
+return val;
+}
+#endif
+
+//Function definitions  
+int readADC(unsigned int pin)  
+{  
+	int fd;          //file pointer  
+	char buf[MAX_BUF];     //file buffer  
+	char val[4];     //holds up to 4 digits for ADC value  
+
+	//Create the file path by concatenating the ADC pin number to the end of the string  
+	//Stores the file path name string into "buf"  
+
+	--pin;
+
+	snprintf(buf, sizeof(buf), "/sys/bus/iio/devices/iio:device0/in_voltage%d_raw", pin);     //Concatenate ADC file name  
+
+	fd = open(buf, O_RDONLY);     //open ADC as read only  
+
+	//Will trigger if the ADC is not enabled  
+	if (fd < 0) {  
+	   perror("ADC - problem opening ADC");  
+	}//end if  
+
+	read(fd, &val, 4);     //read ADC ing val (up to 4 digits 0-1799)  
+	close(fd);     //close file and stop reading  
+
+	return atoi(val);     //returns an integer value (rather than ascii)  
+}//end read ADC()
 
 static void Analog_Input_COV_Detect(unsigned int index,
     float value)

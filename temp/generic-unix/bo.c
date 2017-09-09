@@ -54,26 +54,31 @@ struct gpio_def{
 
 static struct gpio_def bacnet_gpios[] = {
 	{
-		.bbb_port = 8,
+		.bbb_port = 0,//BO_0 : //Dummy
+		.bbb_pin = 0,				
+	},
+
+	{
+		.bbb_port = 8,//BO_1 : P8_12
 		.bbb_pin = 12,				
 	},
 
 	{
-		.bbb_port = 8,
+		.bbb_port = 8,//BO_2 : P8_11
 		.bbb_pin = 11,				
 	},
 
 	{
-		.bbb_port = 8,
+		.bbb_port = 8,//BO_3 : P8_16
 		.bbb_pin = 16,				
 	},
 
 	{
-		.bbb_port = 9,
-		.bbb_pin = 12,				
+		.bbb_port = 8,//BO_4 : P8_15
+		.bbb_pin = 15,				
 	},
-
 };
+
 
 static unsigned int level2 = 0;
 static bool priority_change = false;
@@ -238,10 +243,14 @@ BACNET_BINARY_PV Binary_Output_Present_Value(
 	level2 = value;
 
 	//BBB control
+	
+	if (index == 0)//Ignore the first entry
+		break;
+
 	if(level2 == 1)
-		pin_high(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
+		pin_high(bacnet_gpios[index].bbb_port,bacnet_gpios[index].bbb_pin);
 	else
-		pin_low(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
+		pin_low(bacnet_gpios[index].bbb_port,bacnet_gpios[index].bbb_pin);
 
 
 //	printf("Binary_Output_Present_Value: VALUE %d, sent to SAE! ObjectID %d\n",value,object_instance);
@@ -595,7 +604,11 @@ BACNET_BINARY_PV level = BINARY_NULL;
 		printf("LEVEL2 %d\n",level2);
 
 		//BBB control
-		if(level2 == 1)
+
+		if (object_index == 0)//Ignore the first entry
+			break;
+
+		if (level2 == 1)
 			pin_high(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);
 		else
 			pin_low(bacnet_gpios[object_index].bbb_port,bacnet_gpios[object_index].bbb_pin);

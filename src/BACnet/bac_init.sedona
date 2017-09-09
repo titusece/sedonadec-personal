@@ -14,7 +14,7 @@ class BACnetInit
 {
 
 @defaultOnClone
-@config property bool  BAC_EN = false
+@config property bool  BAC_EN = true//false
 @config property int  PORT_NO = 47808
 @config property int  DEVICE_ID = 260000
 

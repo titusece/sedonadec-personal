@@ -26,6 +26,7 @@
 /* Analog Output Objects - customize for your use */
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
 #include "bacdef.h"
@@ -39,8 +40,97 @@
 
 #include "sedona.h"
 
+#include <math.h>
+
 #ifndef MAX_ANALOG_OUTPUTS
 #define MAX_ANALOG_OUTPUTS 4
+#endif
+
+#if 0
+struct gpio_def{
+	int bbb_port;
+	int bbb_pin;
+};
+
+static struct gpio_def bacnet_ao_gpios[] = {
+	{
+		.bbb_port = 9,
+		.bbb_pin = 16,				
+	},
+
+	{
+		.bbb_port = 9,
+		.bbb_pin = 14,				
+	},
+
+	{
+		.bbb_port = 9,
+		.bbb_pin = 42,				
+	},
+
+	{
+		.bbb_port = 8,
+		.bbb_pin = 13,				
+	},
+
+	{
+		.bbb_port = 8,
+		.bbb_pin = 19,				
+	},
+};
+#endif
+
+
+#if 1
+struct pwm_def{
+	int chip_id;
+	int pwm_no;
+};
+
+static struct pwm_def pwm_arr[] = {
+
+	{
+		.chip_id = 0, //AO_0 -> Dummy
+		.pwm_no = 0,	
+	},
+
+	{
+		.chip_id = 2, //AO_1 -> P9_16
+		.pwm_no = 1,				
+	},
+
+	{
+		.chip_id = 2, //AO_2 -> P9_14
+		.pwm_no = 0,				
+	},
+
+	{
+		.chip_id = 6, //AO_3 -> P9_42
+		.pwm_no = 0,				
+	},
+
+	{
+		.chip_id = 4, //AO_4 -> P8_13
+		.pwm_no = 1,				
+	},
+
+	{
+		.chip_id = 4, //AO_5 -> P8_19
+		.pwm_no = 0,				
+	},
+};
+
+
+//int ret = 0;
+unsigned long period_val = 1000000000;
+unsigned long duty_cycle_val = 500000000;
+char export[100];
+char period[100];
+char dutycycle[100];
+char enable[100];
+int chip_id = 0;
+int pwm_no = 0;
+int enable_val = 0;
 #endif
 
 volatile static float level2_ao = 0.0;
@@ -128,12 +218,111 @@ void Analog_Output_Init(
     void)
 {
     unsigned i, j;
+    int ret = 0;
 
     if (!Analog_Output_Initialized) {
         Analog_Output_Initialized = true;
 
+#if 1
+//Titus
+	system("config-pin overlay cape-universal");
+	system("echo am33xx_pwm > /sys/devices/platform/bone_capemgr/slots");
+//	printf("##################### PWM init done #####################\n");
+
+
         /* initialize all the analog output priority arrays to NULL */
         for (i = 0; i < MAX_ANALOG_OUTPUTS; i++) {
+
+		switch (i) {
+			case 2:
+				ret = system("config-pin P9.14 gpio");
+				if (ret != 0)
+					printf("Writing pinmux failed for P9.14\n");
+
+				ret = system("config-pin P9.14 pwm");
+				if (ret != 0)
+					printf("Writing pinmux failed for P9.14\n");
+
+				break;
+			case 1:
+				ret = system("config-pin P9.16 gpio");
+				if (ret != 0)
+					printf("Writing pinmux failed for P9.16\n");
+
+
+				ret = system("config-pin P9.16 pwm");
+				if (ret != 0)
+					printf("Writing pinmux failed for P9.16\n");
+
+				break;
+			case 5:
+				ret = system("config-pin P8.19 gpio");
+				if (ret != 0)
+					printf("Writing pinmux failed for P8.19\n");
+
+				ret = system("config-pin P8.19 pwm");
+				if (ret != 0)
+					printf("Writing pinmux failed for P8.19\n");
+				break;
+			case 4:
+				ret = system("config-pin P8.13 gpio");
+				if (ret != 0)
+					printf("Writing pinmux failed for P8.13\n");
+
+
+				ret = system("config-pin P8.13 pwm");
+				if (ret != 0)
+					printf("Writing pinmux failed for P8.13\n");
+				break;
+			case 3:
+				ret = system("config-pin P9.42 gpio");
+				if (ret != 0)
+					printf("Writing pinmux failed for P9.42\n");
+
+
+				ret = system("config-pin P9.42 pwm");
+				if (ret != 0)
+					printf("Writing pinmux failed for P9.42\n");
+				break;
+			default:
+				printf("default case Analog_Output_Init\n");
+
+		}
+
+	if(i == 0)//Ignore the first entry
+		goto exit;
+
+	sprintf(export, "echo %d > /sys/class/pwm/pwmchip%d/export",pwm_arr[i].pwm_no,pwm_arr[i].chip_id);
+	printf("################## export : %s  - ##################\n",export);
+	ret = system(export);
+
+	if (ret != 0)
+		printf("%s:%d Writing export failed\n", __func__, __LINE__);
+
+	sprintf(enable, "echo %d > /sys/class/pwm/pwmchip%d/pwm%d/enable", 1, pwm_arr[i].chip_id, pwm_arr[i].pwm_no);
+	printf("################## enable : %s  - ##################\n",enable);
+	ret = system(enable);
+
+	if (ret != 0)
+		printf("%s:%d Writing enable failed\n", __func__, __LINE__);
+
+	sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", 0, pwm_arr[i].chip_id, pwm_arr[i].pwm_no);
+	printf("################## period : %s  - ##################\n",period);
+	ret = system(period);
+
+	if (ret != 0) {
+		printf("%s:%d Writing period failed\n", __func__, __LINE__);
+	}
+
+	sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", 0, pwm_arr[i].chip_id, pwm_arr[i].pwm_no);
+	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+	ret = system(dutycycle);
+
+	if (ret != 0)
+		printf("%s:%d Writing dutycycle failed\n", __func__, __LINE__);
+
+#endif
+exit:
             for (j = 0; j < BACNET_MAX_PRIORITY; j++) {
                 Analog_Output_Level[i][j] = AO_LEVEL_NULL;
             }
@@ -237,6 +426,8 @@ bool Analog_Output_Present_Value_Set(
 {
     unsigned index = 0;
     bool status = false;
+    float percentage;
+    int ret = 0;
 
     index = Analog_Output_Instance_To_Index(object_instance);
     if (index < MAX_ANALOG_OUTPUTS) {
@@ -246,6 +437,47 @@ bool Analog_Output_Present_Value_Set(
 //Titus: AO should be used as float
 //            Analog_Output_Level[index][priority - 1] = (uint8_t) value;
             Analog_Output_Level[index][priority - 1] = value;
+
+#if 1
+//	unsigned int period_ns = 1000000000;
+//	float duty_ns = period_ns * (value/100.0f);
+//	unsigned long duty_ns_int = (unsigned int) duty_ns;
+
+
+
+	unsigned long period_ns = 0;
+	unsigned long freq = 2000;
+	float duty = 0.0;
+	
+	duty = value / 10;
+
+	printf("duty %f\n",duty);
+
+	period_ns = round(1.0e9 / freq);
+        duty = round( period_ns * duty );
+	unsigned long duty_ns_int = (unsigned long) duty;
+
+	printf("period_ns %ld, duty_ns_int %ld \n",period_ns,duty_ns_int);
+
+	if(index == 0)//Ignore the first entry
+		goto exit;
+
+	sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", period_ns, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
+	printf("################## period : %s  - ##################\n",period);
+	ret = system(period);
+
+	if (ret != 0)
+		printf("%s:%d Writing period failed\n", __func__, __LINE__);
+
+	sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", duty_ns_int, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
+	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+	ret = system(dutycycle);
+
+	if (ret != 0)
+		printf("%s:%d Writing dutycycle failed\n", __func__, __LINE__);
+
+#endif
+exit:
 
             /* Note: you could set the physical output here to the next
                highest priority, or to the relinquish default if no
@@ -266,12 +498,13 @@ bool Analog_Output_Present_Value_Relinquish(
 {
     unsigned index = 0;
     bool status = false;
+    int ret = 0;
 
     index = Analog_Output_Instance_To_Index(object_instance);
     if (index < MAX_ANALOG_OUTPUTS) {
         if (priority && (priority <= BACNET_MAX_PRIORITY) &&
             (priority != 6 /* reserved */ )) {
-            Analog_Output_Level[index][priority - 1] = AO_LEVEL_NULL;
+            Analog_Output_Level[index][priority - 1] = AO_LEVEL_NULL; 
             /* Note: you could set the physical output here to the next
                highest priority, or to the relinquish default if no
                priorities are set.
@@ -279,6 +512,28 @@ bool Analog_Output_Present_Value_Relinquish(
                physical output.  This comment may apply to the
                main loop (i.e. check out of service before changing output) */
             status = true;
+
+		if(index == 0)//Ignore the first entry
+			goto exit;
+
+		sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", 0, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
+		printf("################## period : %s  - ##################\n",period);
+		ret = system(period);
+
+		if (ret != 0) {
+			printf("%s:%d Writing period failed\n", __func__, __LINE__);
+		}
+
+		sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", 0, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
+		printf("################## dutycycle : %s  - ##################\n",dutycycle);
+		ret = system(dutycycle);
+
+		if (ret != 0)
+			printf("%s:%d Writing dutycycle failed\n", __func__, __LINE__);
+
+exit:
+		printf("Done!\n");
+
         }
     }
 
@@ -495,12 +750,13 @@ bool Analog_Output_Write_Property(
 
 			if(override_en_ao == 1)
 			{
-		printf("BACnet: Analog_Output_Write_Property: Updating the value in BACnet as we received override; object_id %d priority %d Value %f\n",object_index,priority,value.type.Real);
+			printf("BACnet: Analog_Output_Write_Property: Updating the value in BACnet as we received override; object_id %d priority %d Value %f\n",object_index,priority,value.type.Real);
 
-                status =
-                    Analog_Output_Present_Value_Set(wp_data->object_instance,
-                    value.type.Real, wp_data->priority);
-
+		        status =
+		            Analog_Output_Present_Value_Set(wp_data->object_instance,
+		            value.type.Real, wp_data->priority);
+//			pin_high(bacnet_ao_gpios[wp_data->object_instance].bbb_port,bacnet_ao_gpios[wp_data->object_instance].bbb_pin);
+//			printf("AO_%d (%d_%d) should drive 10V now!\n",wp_data->object_instance,bacnet_ao_gpios[wp_data->object_instance].bbb_port,bacnet_ao_gpios[wp_data->object_instance].bbb_pin);
 			}
 
                 if (wp_data->priority == 6) {
@@ -636,23 +892,80 @@ BACnet_BACnetDev_doBacnetAOOverrideStatus(SedonaVM* vm, Cell* params)
 /* Titus : Initialize the BACnet objects and update the value in BACnet what Sedona writes */
 BACnet_BACnetDev_doBacnetAOValueUpdate(SedonaVM* vm, Cell* params)
 {
+
 	object_index = params[2].ival;//getting ObjectID from Sedona
+
+	unsigned long period_ns = 0;
+	unsigned long freq = 2000;
+	float duty = 0.0;
+	int ret = 0;	
+	duty = params[0].fval / 10;
+
+//	printf("duty %f\n",duty);
+
+	period_ns = round(1.0e9 / freq);
+        duty = round( period_ns * duty );
+	unsigned long duty_ns_int = (unsigned long) duty;
 
 	if(dummy_ao == 0)
 	{
-	int i=0;
-	printf("BACnet: BACnet_BACnetDev_doBacnetAOValueUpdate: AO initialize is done!\n");
-	dummy_ao++;
-	priority_act_ao = DEF_SEDONA_PRIORITY;//default priority (@10)
+		int i=0;
+		printf("BACnet: BACnet_BACnetDev_doBacnetAOValueUpdate: AO initialize is done!\n");
+		dummy_ao++;
+		priority_act_ao = DEF_SEDONA_PRIORITY;//default priority (@10)
 
-	for(i=0;i<MAX_ANALOG_OUTPUTS;i++)
-	Analog_Output_Level[i][DEF_SEDONA_PRIORITY] = 0.0;//Init all the 5 objects
+		for(i=0;i<MAX_ANALOG_OUTPUTS;i++)
+		Analog_Output_Level[i][DEF_SEDONA_PRIORITY] = 0.0;//Init all the 5 objects
+
+		if(object_index == 0)//Ignore the first entry
+			goto exit1;
+
+		printf("period_ns %ld, duty_ns_int %ld \n",period_ns,duty_ns_int);
+
+		sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", 0, pwm_arr[object_index].chip_id, pwm_arr[object_index].pwm_no);
+	//	printf("################## period : %s  - ##################\n",period);
+		ret = system(period);
+
+		if (ret != 0) {
+			printf("%s:%d Writing period failed\n", __func__, __LINE__);
+		}
+
+		sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", 0, pwm_arr[object_index].chip_id, pwm_arr[object_index].pwm_no);
+	//	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+		ret = system(dutycycle);
+
+		if (ret != 0)
+			printf("%s:%d Writing dutycycle failed\n", __func__, __LINE__);
+exit1:
+		printf("Done!\n");
 	}
 
 	if(params[1].ival) {
-//	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f params[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
-	Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
+	//	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f params[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
+		Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
+
+		if(object_index == 0)//Ignore the first entry
+			goto exit2;
+
+		printf("period_ns %ld, duty_ns_int %ld \n",period_ns,duty_ns_int);
+
+		sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", period_ns, pwm_arr[object_index].chip_id, pwm_arr[object_index].pwm_no);
+	//	printf("################## period : %s  - ##################\n",period);
+		ret = system(period);
+
+		if (ret != 0)
+			printf("%s:%d Writing period failed\n", __func__, __LINE__);
+
+		sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", duty_ns_int, pwm_arr[object_index].chip_id, pwm_arr[object_index].pwm_no);
+	//	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+		ret = system(dutycycle);
+
+		if (ret != 0)
+			printf("%s:%d Writing dutycycle failed\n", __func__, __LINE__);
+exit2:
+		printf("Done!\n");
 	}
+
 }
 
 
@@ -661,6 +974,18 @@ BACnet_BACnetDev_doBacnetAOObjectIdUpdate(SedonaVM* vm, Cell* params)
 {
 	unsigned pri = 9;
 	float val = 0.0;
+	int ret = 0;
+	unsigned long period_ns = 0;
+	unsigned long freq = 2000;
+	float duty = 0.0;
+	
+	duty = params[1].fval / 10;
+
+	printf("duty %f\n",duty);
+
+	period_ns = round(1.0e9 / freq);
+        duty = round( period_ns * duty );
+	unsigned long duty_ns_int = (unsigned long) duty;
 
 	pri = Analog_Output_Present_Value_Sedona(params[0].ival);
 	val = Analog_Output_Present_Value(params[0].ival);
@@ -668,6 +993,28 @@ BACnet_BACnetDev_doBacnetAOObjectIdUpdate(SedonaVM* vm, Cell* params)
 	printf("BACnet: BACnet_BACnetDev_doBacnetAOObjectIdUpdate Priority %d, ObjectID %d, Value in Sedona %f, Value in BACnet %f\n",pri,params[0].ival,params[1].fval,val);
 
 	printf("BACnet : BACnet_BACnetDev_doBacnetAOObjectIdUpdate : Writing the value for changed ObjectID...  Priority %d, New ObjectID %d, Value %f\n",pri,params[0].ival,params[1].fval);
+
+	if(params[0].ival == 0)//Ignore the first entry
+		goto exit;
+
+	printf("period_ns %ld, duty_ns_int %ld \n",period_ns,duty_ns_int);
+
+	sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", period_ns, pwm_arr[params[0].ival].chip_id, pwm_arr[params[0].ival].pwm_no);
+//	printf("################## period : %s  - ##################\n",period);
+	ret = system(period);
+
+	if (ret != 0)
+		printf("%s:%d Writing period failed\n", __func__, __LINE__);
+
+	sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", duty_ns_int, pwm_arr[params[0].ival].chip_id, pwm_arr[params[0].ival].pwm_no);
+//	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+	ret = system(dutycycle);
+
+	if (ret != 0)
+		printf("%s:%d Writing dutycycle failed\n", __func__, __LINE__);
+
+exit:
+
 	Analog_Output_Level[params[0].ival][pri] = params[1].fval;//Value updating in BDT
 
 	return pri;

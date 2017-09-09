@@ -39,7 +39,7 @@ def gcc(exeFile, srcFiles, includes, libs, defs):
 #Titus : Need to add pthread library to build
   cmd += " -pthread"
 #Titus : Need to add "clock" to resovle the "clock_gettime" API
-  cmd += "  -lrt"
+  cmd += "  -lrt -lm"
 
 #  cmd += " -DPRINT_ENABLED=1"
 
