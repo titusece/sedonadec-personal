@@ -184,6 +184,9 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV */ ,
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
+
+//Titus: Not required
+#if 0
     {OBJECT_BINARY_VALUE,
             Binary_Value_Init,
             Binary_Value_Count,
@@ -199,7 +202,7 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV */ ,
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
-#if 0
+
     {OBJECT_CHARACTERSTRING_VALUE,
             CharacterString_Value_Init,
             CharacterString_Value_Count,
@@ -216,6 +219,7 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
 #endif
+#if 0
 #if defined(INTRINSIC_REPORTING)
     {OBJECT_NOTIFICATION_CLASS,
             Notification_Class_Init,
@@ -385,6 +389,7 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV */ ,
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
+#endif
     {MAX_BACNET_OBJECT_TYPE,
             NULL /* Init */ ,
             NULL /* Count */ ,

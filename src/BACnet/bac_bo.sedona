@@ -177,6 +177,7 @@ ov = false;
   }
 
 //defining the local variables
+define int MAX_BINARY_OUTPUTS = 5;//#define MAX_BINARY_OUTPUTS 5
 bool override_en = false;
 bool ov = false;
 int ret = 0;
@@ -190,8 +191,8 @@ bool pri_change = null;
 bool ret7 = false;
 int ret4 = -1;
 int ret6 = 9;
-inline static int[5] ia
-inline static int[5] pri
+inline static int[MAX_BINARY_OUTPUTS] ia
+inline static int[MAX_BINARY_OUTPUTS] pri
 int pri_sed = 10;
 bool objID_status = false;
 }

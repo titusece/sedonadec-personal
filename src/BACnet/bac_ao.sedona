@@ -43,7 +43,11 @@ virtual void loaded()
   override void changed(Slot slot)
   {
 
-
+	if (count_arr2[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetAO\" App Executing...!\n") 
+	}
+	count_arr2[ObjectID] = 1;
 
     super.changed(slot)
 
@@ -80,7 +84,7 @@ virtual void loaded()
 	if ( ret2 == 0 )
 	{
 //	Sys.out.print("SEDONA: ########### $name ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
-	Sys.out.print("SEDONA: $name: BACnetAO: Not allowed to write by Sedona if BDT is written @1, so pls make sure.n")
+	Sys.out.print("SEDONA: $name: BACnetAO: Not allowed to write by Sedona if BDT is written @1, so pls make sure.")
 
 	ov = true;
 	}
@@ -158,6 +162,7 @@ ov = false;
   }
 
 //defining the local variables
+define int MAX_ANALOG_OUTPUTS = 6;//#define MAX_ANALOG_OUTPUTS 6
 static int override_en = 0;
 bool ov = false;
 float ret = 0.0;
@@ -170,11 +175,12 @@ bool true_bkp = false;
 bool In_change = null;
 bool pri_change = null;
 bool pri_bkp = false;
-inline static int[5] ia
+inline static int[MAX_ANALOG_OUTPUTS] ia
 bool objID_status = false;
 int ret6 = 9;
 float ret7 = 0.0;
 static int count = 0;
-inline static int[5] count_arr;
+inline static int[MAX_ANALOG_OUTPUTS] count_arr;
+inline static int[MAX_ANALOG_OUTPUTS] count_arr2;
 
 }

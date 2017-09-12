@@ -33,9 +33,9 @@ class BACnetDev
   native static int doBacnetAOObjectIdUpdate(int ObjectId, float value,int Priority)
   native static float doBacnetAOObjectIdBkp(int ObjectId)
 
-//  native static float doBacnetAIValueStatus(int instance)
-//  native static int doBacnetAIObjectIdUpdate(int ObjectId, float value)
-//  native static float doBacnetAIObjectIdBkp(int ObjectId)
+  native static float doBacnetAIValueStatus(int instance)
+
+  native static bool doBacnetBIValueStatus(int instance)
 
   native static float doBacnetAVValueStatus(int instance)
   native static int doBacnetAVPriorityStatus(int priority, bool pri_change, int objectID)

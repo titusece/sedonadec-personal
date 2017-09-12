@@ -225,7 +225,7 @@ loop:
     return value;
 }
 
-#if 0
+#if 11
 /* Titus : return the instance or ObjectID to Sedona for which is received override event */
 Cell BACnet_BACnetDev_doBacnetAIValueStatus(SedonaVM* vm, Cell* params)
 {
@@ -234,7 +234,7 @@ Cell BACnet_BACnetDev_doBacnetAIValueStatus(SedonaVM* vm, Cell* params)
 		goto loop;
 	level2_ao_new = AI_Descr[params[0].ival].Present_Value = readADC(params[0].ival);
 //	usleep(1000);
-	sleep(1);
+//	sleep(1);
 loop:
 //	printf("BACNET: BACnet_BACnetDev_doBacnetAIValueStatus: level2_ao_new : %f\n",level2_ao_new);
 	result.fval = level2_ao_new;
@@ -274,7 +274,8 @@ int readADC(unsigned int pin)
 {  
 	int fd;          //file pointer  
 	char buf[MAX_BUF];     //file buffer  
-	char val[4];     //holds up to 4 digits for ADC value  
+	char val[4];     //holds up to 4 digits for ADC value
+	int ret = 0;
 
 	//Create the file path by concatenating the ADC pin number to the end of the string  
 	//Stores the file path name string into "buf"  
@@ -288,9 +289,11 @@ int readADC(unsigned int pin)
 	//Will trigger if the ADC is not enabled  
 	if (fd < 0) {  
 	   perror("ADC - problem opening ADC");  
+           printf("Requested device is not available! %s\n",buf);
+	   return -1;	
 	}//end if  
 
-	read(fd, &val, 4);     //read ADC ing val (up to 4 digits 0-1799)  
+	ret = read(fd, &val, 4);     //read ADC ing val (up to 4 digits 0-1799)
 	close(fd);     //close file and stop reading  
 
 	return atoi(val);     //returns an integer value (rather than ascii)  

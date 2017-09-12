@@ -40,6 +40,8 @@
 #include "handlers.h"
 #include "BBBiolib.h"
 
+#include "sedona.h"
+
 #ifndef MAX_BINARY_INPUTS
 #define MAX_BINARY_INPUTS 5
 #endif
@@ -228,6 +230,14 @@ BACNET_BINARY_PV Binary_Input_Present_Value(
 
     return value;
 }
+
+Cell BACnet_BACnetDev_doBacnetBIValueStatus(SedonaVM* vm, Cell* params)
+{
+	int val = 0;
+	val = Binary_Input_Present_Value(params[0].ival);
+	return val == 1 ? oneCell : zeroCell;
+}
+
 
 bool Binary_Input_Out_Of_Service(
     uint32_t object_instance)

@@ -181,7 +181,7 @@ In_change = false;
   }
 
 //defining the local variables
-define int MAX_ANALOG_VALUES = 5;
+define int MAX_ANALOG_VALUES = 5;//#define MAX_ANALOG_VALUES 5
 static int override_en = 0;
 bool ov = false;
 float ret = 0.0;
