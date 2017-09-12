@@ -1,0 +1,187 @@
+//
+// Copyright (c) 2007 Tridium, Inc
+// All Rights Reserved.
+//
+// History:
+//   29 Aug 17  Titus   creation
+//
+
+//@niagaraIcon="module://icons/x16/io.png"
+class BACnetAI
+  extends Component
+{
+
+//  @defaultOnClone
+
+//  @config property int Priority = 10
+//  @readonly property float In = 0.0
+//  @readonly property float In = 0.0
+  @config property bool  enable = false
+//  @config property long delay
+  @readonly @allowNull property float Out = 0.0
+
+  @defaultOnClone
+  @config property int ObjectID = -1
+
+/*
+virtual void loaded()
+{
+}
+*/
+
+
+
+  virtual override void start()
+  {
+    // Don't touch hardware until input value is valid
+    if ( !Sys.app.isSteadyState() )
+      return
+
+//	delay := (long) 1;
+	Sys.out.print("SEDONA: $name : \"BACnetAI\" App Started!\n")
+   return
+
+  }
+
+  override void changed(Slot slot)
+  {
+
+
+
+    super.changed(slot)
+
+    // Don't respond to prop changes while app is loading
+    if (!Sys.app.isRunning()) return
+
+
+    if ( slot == BACnetAI.ObjectID )
+	{
+//	objID_status = true;
+	//Read the older value stored in the ObjectID (need to back as we are going to change the ObjectID)
+//	ret7 = BACnetDev.doBacnetAIObjectIdBkp(ObjectID)
+	//write the older value
+//	if(enable)
+//		Out := ret7
+//	ret6 = BACnetDev.doBacnetAIObjectIdUpdate(ObjectID,Out)
+//	Sys.out.print("SEDONA: $name: BACnetAI: ObjectID is changed and Priority:$ret6 Out:$Out ObjectID:$ObjectID!\n")
+	}
+
+/*
+    // If BACnetAI.In changes, clear the override and drive what IN has.
+    if ( slot == BACnetAI.In )
+	{
+	false_bkp = false;
+	true_bkp = false;
+
+//clear objectID change status
+	objID_status = false;
+
+//Allow to write by Sedona continuously if no write happens in BDT @1
+	if ( ret2 != 0 )
+	ov = false;
+
+//Not allow to write by Sedona if BDT is written @1 (most higher priority)
+	if ( ret2 == 0 )
+	{
+//	Sys.out.print("SEDONA: ########### $name ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
+	Sys.out.print("SEDONA: $name: BACnetAI: Not allowed to write by Sedona if BDT is written @1, so pls make sure.n")
+
+	ov = true;
+	}
+
+	//clear the event
+	ia[ObjectID] = -1;
+//	Sys.out.print("SEDONA: $name ##################### OVERRIDE is cleared for instance $ObjectID!!! #################### \n")
+
+	In_change = true;
+	Sys.out.print("SEDONA: $name: BACnetAI: Override is cleared as \"BACnetAI.In\" is changed, so now, drive what \"BACnetAI.In\" has! ( also please note that you can't control AIs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
+
+//latest fix
+	override_en = 0;
+
+	}
+*/
+
+  }
+
+
+ virtual override void execute()
+  {
+
+//Sys.out.print("SEDONA: $name : \"BACnetAI\" App Executing...!\n") 
+
+ret3 = BACnetDev.doBacnetInitStatus()
+
+ret = BACnetDev.doBacnetAIValueStatus(ObjectID)
+
+//ret4 = BACnetDev.doBacnetAIOverrideInst()
+
+//ia[ret4] = 1;
+
+//override_en = BACnetDev.doBacnetAIOverrideStatus()
+
+//	Sys.sleep(100ms * delay)
+
+if (ret3 == 0)
+Sys.out.print("SEDONA: $name: BACnetAI: \"BACnetAI\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetAI\n")
+
+ia[ObjectID] = 1;
+
+if( ia[ObjectID] == 1 )
+      {
+	if(enable)
+		Out := ret
+//	ov = true;
+	//clearing the override
+//	override_en = 0
+      }
+
+/*
+//all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BOSS and Not override happened by BDT.
+if ( (ret3 == 1) && (ov == false) && (objID_status == false) )
+{
+//Sys.out.print("SEDONA: $name Over ride is cleared, so drive to Out what In has!\n")
+Out := In
+//need to send the Out value to BACnet to update the "level" variable to replicate the same in BDT tool.
+BACnetDev.doBacnetAIValueUpdate(Out, In_change, ObjectID)
+In_change = false;
+}
+
+
+if (Priority > 16)
+{
+Sys.out.print("SEDONA: $name: BACnetAI: Priority level is excedded! and set to default @10; BACnet is support upto 16 priority levels\n")
+Priority := 10
+}
+
+//Its for setting priority to BDT
+ret2 = BACnetDev.doBacnetAIPriorityStatus(Priority, pri_change, ObjectID)
+
+
+//Take the value from BACnet.In after override is released.
+if ( ret2 != 0 )
+ov = false;
+*/
+
+  }
+
+//defining the local variables
+define int MAX_ANALOG_INPUTS = 8;//#define MAX_ANALOG_INPUTS 8
+static int override_en = 0;
+bool ov = false;
+float ret = 0.0;
+int ret2 = 255;
+int ret3 = 0;
+int ret4 = -1;
+int priority_max = 16;
+bool false_bkp = false;
+bool true_bkp = false;
+bool In_change = null;
+bool pri_change = null;
+bool pri_bkp = false;
+inline static int[MAX_ANALOG_INPUTS] ia;
+bool objID_status = false;
+int ret6 = 9;
+float ret7 = 0.0;
+
+}
