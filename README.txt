@@ -1,9 +1,7 @@
-<b>
                           ===================================
                           Compiling Sedona on a Raspberry Pi2
                           ===================================
-</b>
-  If you have a Raspberry Pi2, you can make it a Sedona Device in just a few minutes!  
+  If you have a Raspberry Pi2/Pi3 and Beagle bone black, you can make it a Sedona Device in just a few minutes!  
 
   See <a href='http://www.raspberrypi.org/faqs'>http://www.raspberrypi.org</a> to find out more about the Raspberry Pi, where 
   to get one, and how to do the initial setup.
@@ -48,7 +46,4 @@
 
 
  Once the SVM is up and running, the device should be discoverable from your Niagara station 
- or Sedona Workbench through SedonaNetwork.  
-
-File created by Gilberto Villani Brito (gilbertovb@gmail.com) at 28 March 2016
-
+ or Sedona Workbench through SedonaNetwork. 
