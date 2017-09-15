@@ -191,8 +191,9 @@ bool pri_change = null;
 bool ret7 = false;
 int ret4 = -1;
 int ret6 = 9;
-inline static int[MAX_BINARY_OUTPUTS] ia
-inline static int[MAX_BINARY_OUTPUTS] pri
+//Increase all the arrays if OBJECTS count increases
+inline static int[10] ia
+inline static int[10] pri
 int pri_sed = 10;
 bool objID_status = false;
 }

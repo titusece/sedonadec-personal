@@ -1301,6 +1301,7 @@ Cell BACnet_BACnetDev_doBacnetAVValueStatus(SedonaVM* vm, Cell* params)
 	Cell result;
 	level2_av_new = Analog_Value_Present_Value(params[0].ival);
 	result.fval = level2_av_new;
+//	printf("BACnet_BACnetDev_doBacnetAVValueStatus: params[0].ival : %d, level2_av_new %f\n", params[0].ival, level2_av_new);
 	return result;
 }
 

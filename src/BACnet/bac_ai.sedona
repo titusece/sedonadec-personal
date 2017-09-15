@@ -179,7 +179,7 @@ bool true_bkp = false;
 bool In_change = null;
 bool pri_change = null;
 bool pri_bkp = false;
-inline static int[MAX_ANALOG_INPUTS] ia;
+inline static int[10] ia;//Increase all the arrays if OBJECTS count increases
 bool objID_status = false;
 int ret6 = 9;
 float ret7 = 0.0;

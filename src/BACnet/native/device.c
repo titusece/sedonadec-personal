@@ -185,8 +185,6 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
 
-//Titus: Not required
-#if 0
     {OBJECT_BINARY_VALUE,
             Binary_Value_Init,
             Binary_Value_Count,
@@ -203,6 +201,24 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
 
+    {OBJECT_MULTI_STATE_VALUE,
+            Multistate_Value_Init,
+            Multistate_Value_Count,
+            Multistate_Value_Index_To_Instance,
+            Multistate_Value_Valid_Instance,
+            Multistate_Value_Object_Name,
+            Multistate_Value_Read_Property,
+            Multistate_Value_Write_Property,
+            Multistate_Value_Property_Lists,
+            NULL /* ReadRangeInfo */ ,
+            NULL /* Iterator */ ,
+            NULL /* Value_Lists */ ,
+            NULL /* COV */ ,
+            NULL /* COV Clear */ ,
+        NULL /* Intrinsic Reporting */ },
+
+//Titus: Not required
+#if 0
     {OBJECT_CHARACTERSTRING_VALUE,
             CharacterString_Value_Init,
             CharacterString_Value_Count,

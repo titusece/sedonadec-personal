@@ -73,5 +73,6 @@ if( arr_obj[ObjectID] == 1 )
 define int MAX_BINARY_INPUTS = 5;//#define MAX_BINARY_INPUTS 5
 int ret1 = 0;
 bool ret2 = false;
-inline static int[MAX_BINARY_INPUTS] arr_obj;
+//Increase all the arrays if OBJECTS count increases
+inline static int[10] arr_obj;
 }

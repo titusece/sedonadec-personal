@@ -193,6 +193,7 @@ int iolib_setdir(char port, char pin, char dir)
 		return(-1);
 	}
 #ifdef BBBIO_LIB_DBG
+	BBBIO_sys_GPIO_CLK_status();
 	printf("iolib_setdir: PortSet_ptr P%d.%d , %X\n",port ,pin , PortSet_ptr[port-8][pin-1]);
 #endif
 	reg=(void*)gpio_addr[PortSet_ptr[port-8][pin-1]] +BBBIO_GPIO_OE;
