@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
   char* filename = NULL;
   int optCount = 0;
 
-//  printf("Running SEDONA alone...\n");
+  printf("Running SEDONA alone...\n");
 
   // parse arguments
   for (i=1; i<argc; ++i)
@@ -108,12 +108,14 @@ static int runInPlatformMode()
 {
   int result = 0;
 
-//Titus : hard-coded the names to run the default *.sab and *.scode files in platform mode
-//  const char* scode = "kits.scode";
-//  const char* app   = "app.sab";
+  const char* scode = "kits.scode";
+  const char* app   = "app.sab";
 
-  const char* scode = "platRpi.scode";
-  const char* app   = "platRpi.sab";
+//Titus : hard-coded the names to run the default *.sab and *.scode files in platform mode
+//  const char* scode = "platRpi.scode";
+//  const char* app   = "platRpi.sab";
+
+  printf("%s:%d result %d, 0x%x\n", result, result);
 
 
   SedonaVM vm;
@@ -186,6 +188,8 @@ static int runInStandaloneMode(const char* filename, int vmArgc, char* vmArgv[])
   // run the VM
   t1 = sys_Sys_ticks(NULL, NULL);
   result = vmRun(&vm);
+  
+  printf("%s:%d result %d, 0x%x\n", result, result);
 
   while ((result == ERR_HIBERNATE) || (result == ERR_YIELD))
   {

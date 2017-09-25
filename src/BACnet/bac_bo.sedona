@@ -33,6 +33,7 @@ virtual void loaded()
       return
 
 	Sys.out.print("SEDONA: $name : \"BACnetBO\" App Started!\n")
+	count_arr[ObjectID] = 0;
 
     return
   }
@@ -61,6 +62,12 @@ virtual void loaded()
     // If BACnetBO.In changes, clear the override and drive what IN has.
     if ( slot == BACnetBO.In )
 	{
+
+	if (count_arr2[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetBO\" App Executing...!\n") 
+	}
+	count_arr2[ObjectID] = 1;
 
 //clear objectID change status
 	objID_status = false;
@@ -98,6 +105,14 @@ virtual void loaded()
 
  virtual override void execute()
   {
+
+	if (count_arr[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetBO\" App Executing...!\n") 
+
+	}
+
+	count_arr[ObjectID] = 1;
 
 //Sys.out.print("SEDONA: $name : \"BACnetBO\" App Executing...!\n")
 
@@ -196,4 +211,7 @@ inline static int[10] ia
 inline static int[10] pri
 int pri_sed = 10;
 bool objID_status = false;
+
+inline static int[10] count_arr;
+inline static int[10] count_arr2;
 }

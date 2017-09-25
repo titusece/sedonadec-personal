@@ -39,6 +39,7 @@ virtual void loaded()
 
 //	delay := (long) 1;
 	Sys.out.print("SEDONA: $name : \"BACnetAI\" App Started!\n")
+	count_arr[ObjectID] = 0;
    return
 
   }
@@ -46,7 +47,11 @@ virtual void loaded()
   override void changed(Slot slot)
   {
 
-
+	if (count_arr2[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetAI\" App Executing...!\n") 
+	}
+	count_arr2[ObjectID] = 1;
 
     super.changed(slot)
 
@@ -107,6 +112,14 @@ virtual void loaded()
 
  virtual override void execute()
   {
+
+	if (count_arr[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetAI\" App Executing...!\n") 
+
+	}
+
+	count_arr[ObjectID] = 1;
 
 //Sys.out.print("SEDONA: $name : \"BACnetAI\" App Executing...!\n") 
 
@@ -184,4 +197,6 @@ bool objID_status = false;
 int ret6 = 9;
 float ret7 = 0.0;
 
+inline static int[10] count_arr2;
+inline static int[10] count_arr;
 }

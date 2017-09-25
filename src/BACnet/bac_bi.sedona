@@ -32,12 +32,19 @@ virtual void loaded()
       return
 
 	Sys.out.print("SEDONA: $name : \"BACnetBI\" App Started!\n")
+	count_arr[ObjectID] = 0;
    return
 
   }
 
   override void changed(Slot slot)
   {
+
+	if (count_arr2[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+	}
+	count_arr2[ObjectID] = 1;
 
     super.changed(slot)
 
@@ -49,6 +56,14 @@ virtual void loaded()
 
  virtual override void execute()
   {
+
+	if (count_arr[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+
+	}
+
+	count_arr[ObjectID] = 1;
 
 //Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
 
@@ -75,4 +90,7 @@ int ret1 = 0;
 bool ret2 = false;
 //Increase all the arrays if OBJECTS count increases
 inline static int[10] arr_obj;
+
+inline static int[10] count_arr;
+inline static int[10] count_arr2;
 }

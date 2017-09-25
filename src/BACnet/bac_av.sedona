@@ -27,12 +27,21 @@ class BACnetAV
       return
 
 	Sys.out.print("SEDONA: $name : \"BACnetAV\" App Started!\n")
+	count_arr[ObjectID] = 0;
+
    return
 
   }
 
   override void changed(Slot slot)
   {
+
+	if (count_arr2[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetAV\" App Executing...!\n") 
+	}
+	count_arr2[ObjectID] = 1;
+
     super.changed(slot)
 
     // Don't respond to prop changes while app is loading
@@ -70,7 +79,7 @@ class BACnetAV
 		if ( ret2 == 0 )
 		{
 		//	Sys.out.print("########### $name SEDONA ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
-			Sys.out.print("SEDONA: $name: BACnetAV: Not allowed to write by Sedona if BDT is written @1, so pls make sure.\n")
+//			Sys.out.print("SEDONA: $name: BACnetAV: Not allowed to write by Sedona if BDT is written @1, so pls make sure.\n")
 
 			ov = true;
 		}
@@ -81,7 +90,8 @@ class BACnetAV
 	//	Sys.out.print("$name SEDONA: $name ##################### OVERRIDE is cleared for instance $ObjectID!!! #################### \n")
 
 		In_change = true;
-		Sys.out.print("SEDONA: $name: BACnetAV: Override is cleared as \"BACnetAV.In\" is changed, so now, drive what \"BACnetAV.In\" has! ( also please note that you can't control AVs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
+//		Sys.out.print("SEDONA: $name: BACnetAV: Override is cleared as \"BACnetAV.In\" is changed, so now, drive what \"BACnetAV.In\" has! ( also please note that you can't control AVs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
+		Sys.out.print("SEDONA: $name: BACnetAV: Override is cleared as \"BACnetAV.In\" is changed, so now, drive what \"BACnetAV.In\" has!\n")
 
 	//latest fix
 		override_en = 0;
@@ -91,6 +101,14 @@ class BACnetAV
 
  virtual override void execute()
   {
+
+	if (count_arr[ObjectID] == 0) {
+		Sys.sleep(1000ms);
+		Sys.out.print("SEDONA: $name : \"BACnetAV\" App Executing...!\n") 
+
+	}
+
+	count_arr[ObjectID] = 1;
 
 	//Sys.out.print("SEDONA: $name : \"BACnetAV\" App Executing...!\n") 
 
@@ -208,4 +226,8 @@ static int ret9 = -1;
 bool null_status = false;
 bool null_status2 = false;
 int count = 0
+
+inline static int[10] count_arr;
+inline static int[10] count_arr2;
+
 }

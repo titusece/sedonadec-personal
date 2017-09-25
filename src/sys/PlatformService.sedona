@@ -84,6 +84,8 @@ class PlatformService
   **
   override virtual bool canHibernate()
   {
+//    return false
+//Titus
     return false
   }
 

@@ -216,12 +216,12 @@ float Analog_Input_Present_Value(
 	if(index < 0 || index == 0) //Ignore the first entry
 		goto loop;
 	AI_Descr[index].Present_Value = readADC(index);//Titus
-	printf("%s:%d ADC value (AI_%d) %f\n", __func__, __LINE__, index, AI_Descr[index].Present_Value);
+//	printf("%s:%d ADC value (AI_%d) %f\n", __func__, __LINE__, index, AI_Descr[index].Present_Value);
 loop:
         value = AI_Descr[index].Present_Value;
     }
 
-    printf("%s:%d PROBE2 ADC value (AI_%d) %f\n", __func__, __LINE__, index, value);
+//    printf("%s:%d PROBE2 ADC value (AI_%d) %f\n", __func__, __LINE__, index, value);
     return value;
 }
 

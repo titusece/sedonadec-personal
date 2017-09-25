@@ -270,12 +270,12 @@ void BBBIO_sys_GPIO_CLK_status()
 	int v_IDLEST ;
 	int v_MODULEMODE ;
 
-	printf("\n******************************************************\n");
-	printf("************ GPIO Clock module Information ***********\n");
-	printf("******************************************************\n");
+//	printf("\n******************************************************\n");
+//	printf("************ GPIO Clock module Information ***********\n");
+//	printf("******************************************************\n");
 	reg =(void*)cm_per_addr + BBBIO_CM_PER_L4LS_CLKSTCTRL;
 	reg_value = *reg ;
-	printf("CM_PER CM_PER_L4LS_CLKSTCTRL : %X\n\n", reg_value );
+//	printf("CM_PER CM_PER_L4LS_CLKSTCTRL : %X\n\n", reg_value );
 
 	reg =(void*)cm_wkup_addr + BBBIO_CM_WKUP_GPIO0_CLKCTRL ;
         reg_value = *reg ;
@@ -283,10 +283,10 @@ void BBBIO_sys_GPIO_CLK_status()
 	v_IDLEST = (reg_value >> 16) & 0x02 ;
 	v_MODULEMODE =  reg_value & 0x02 ;
 
-        printf("CM_WKUP CM_WKUP_GPIO0_CLKCTRL : %X\n", *reg );
-        printf("\t[18]    OPTFCLKEN_GPIO_0_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
-        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
-        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
+//        printf("CM_WKUP CM_WKUP_GPIO0_CLKCTRL : %X\n", *reg );
+//        printf("\t[18]    OPTFCLKEN_GPIO_0_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
+//        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
+//        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
 
 	reg =(void*)cm_per_addr + BBBIO_CM_PER_GPIO1_CLKCTRL;
 	reg_value = *reg ;
@@ -294,10 +294,10 @@ void BBBIO_sys_GPIO_CLK_status()
         v_IDLEST = (reg_value >> 16) & 0x02 ;
         v_MODULEMODE =  reg_value & 0x02 ;
 
-	printf("CM_PER CM_PER_GPIO1_CLKCTRL : %X\n", *reg );
-        printf("\t[18]    OPTFCLKEN_GPIO_1_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
-        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
-        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
+//	printf("CM_PER CM_PER_GPIO1_CLKCTRL : %X\n", *reg );
+//        printf("\t[18]    OPTFCLKEN_GPIO_1_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
+//        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
+//        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
 
 	reg =(void*)cm_per_addr + BBBIO_CM_PER_GPIO2_CLKCTRL;
 	reg_value = *reg ;
@@ -305,10 +305,10 @@ void BBBIO_sys_GPIO_CLK_status()
         v_IDLEST = (reg_value >>16) & 0x02 ;
         v_MODULEMODE =  reg_value & 0x02 ;
 
-	printf("CM_PER CM_PER_GPIO2_CLKCTRL : %X\n", *reg );
-        printf("\t[18]    OPTFCLKEN_GPIO_2_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
-        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
-        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
+//	printf("CM_PER CM_PER_GPIO2_CLKCTRL : %X\n", *reg );
+//        printf("\t[18]    OPTFCLKEN_GPIO_2_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
+//        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
+//        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
 
 	reg =(void*)cm_per_addr + BBBIO_CM_PER_GPIO3_CLKCTRL;
 	reg_value = *reg ;
@@ -316,10 +316,10 @@ void BBBIO_sys_GPIO_CLK_status()
         v_IDLEST = (reg_value >> 16) & 0x02 ;
         v_MODULEMODE =  reg_value & 0x02 ;
 
-	printf("CM_PER CM_PER_GPIO3_CLKCTRL : %X\n", *reg );
-        printf("\t[18]    OPTFCLKEN_GPIO_0_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
-        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
-        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
+//	printf("CM_PER CM_PER_GPIO3_CLKCTRL : %X\n", *reg );
+//        printf("\t[18]    OPTFCLKEN_GPIO_0_GDBCLK : %X (%s)\n", v_GDBLCK ,s_GDBLCK[v_GDBLCK]);
+//        printf("\t[17-18] IDLEST                  : %X (%s)\n", v_IDLEST ,s_IDLEST[v_IDLEST]);
+//        printf("\t[0-1]   MODULEMODE              : %X (%s)\n\n", v_MODULEMODE ,s_MODULEMODE[v_MODULEMODE]);
 }
 //-----------------------------------------------------------------------------------------------
 /**************************************************

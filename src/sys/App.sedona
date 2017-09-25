@@ -222,6 +222,7 @@ class App
         {
           more |= s.work()
           canHibernate &= s.canHibernate()
+//	  canHibernate = true;//Titus// Force to support the Hibernate
         }
         if(canHibernate) runStatus = Err.hibernate
 
@@ -242,16 +243,22 @@ class App
       //  If hibernating, inform services.
       //  Note that hibernation check must take place before yield since
       //  hibernation is higher priority then yielding
+
+//Sys.out.print("SEDONA: $runStatus : $Err.hibernate\n")
+
       if (runStatus == Err.hibernate)
       {
         //  Hibernation has been requested
-        for (Service s = services; s != null; s = s.nextService)
+        for (Service s = services; s != null; s = s.nextService) {
+	  log.message("onHibernate")
           s.onHibernate()
+	}
 
         return runStatus
       }
       else if (platform.yieldRequired())
       {
+	log.message("platform.yield")
         platform.yield(nsUntilDeadline);
         runStatus = Err.yield
         return runStatus;
@@ -262,6 +269,7 @@ class App
 
         // note that if we have overrun our deadline, sleep time will be
         // negative and Sys.sleep will return immediately.
+//	log.message("Sys.sleep")
         Sys.sleep(nsUntilDeadline)
       }
     }

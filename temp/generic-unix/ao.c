@@ -293,21 +293,21 @@ void Analog_Output_Init(
 		goto exit;
 
 	sprintf(export, "echo %d > /sys/class/pwm/pwmchip%d/export",pwm_arr[i].pwm_no,pwm_arr[i].chip_id);
-	printf("################## export : %s  - ##################\n",export);
+//	printf("################## export : %s  - ##################\n",export);
 	ret = system(export);
 
 	if (ret != 0)
 		printf("%s:%d Writing export failed\n", __func__, __LINE__);
 
 	sprintf(enable, "echo %d > /sys/class/pwm/pwmchip%d/pwm%d/enable", 1, pwm_arr[i].chip_id, pwm_arr[i].pwm_no);
-	printf("################## enable : %s  - ##################\n",enable);
+//	printf("################## enable : %s  - ##################\n",enable);
 	ret = system(enable);
 
 	if (ret != 0)
 		printf("%s:%d Writing enable failed\n", __func__, __LINE__);
 
 	sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", 0, pwm_arr[i].chip_id, pwm_arr[i].pwm_no);
-	printf("################## period : %s  - ##################\n",period);
+//	printf("################## period : %s  - ##################\n",period);
 	ret = system(period);
 
 	if (ret != 0) {
@@ -315,7 +315,7 @@ void Analog_Output_Init(
 	}
 
 	sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", 0, pwm_arr[i].chip_id, pwm_arr[i].pwm_no);
-	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+//	printf("################## dutycycle : %s  - ##################\n",dutycycle);
 	ret = system(dutycycle);
 
 	if (ret != 0)
@@ -463,14 +463,14 @@ bool Analog_Output_Present_Value_Set(
 		goto exit;
 
 	sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", period_ns, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
-	printf("################## period : %s  - ##################\n",period);
+//	printf("################## period : %s  - ##################\n",period);
 	ret = system(period);
 
 	if (ret != 0)
 		printf("%s:%d Writing period failed\n", __func__, __LINE__);
 
 	sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", duty_ns_int, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
-	printf("################## dutycycle : %s  - ##################\n",dutycycle);
+//	printf("################## dutycycle : %s  - ##################\n",dutycycle);
 	ret = system(dutycycle);
 
 	if (ret != 0)
@@ -517,7 +517,7 @@ bool Analog_Output_Present_Value_Relinquish(
 			goto exit;
 
 		sprintf(period, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/period", 0, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
-		printf("################## period : %s  - ##################\n",period);
+//		printf("################## period : %s  - ##################\n",period);
 		ret = system(period);
 
 		if (ret != 0) {
@@ -525,7 +525,7 @@ bool Analog_Output_Present_Value_Relinquish(
 		}
 
 		sprintf(dutycycle, "echo %ld > /sys/class/pwm/pwmchip%d/pwm%d/duty_cycle", 0, pwm_arr[index].chip_id, pwm_arr[index].pwm_no);
-		printf("################## dutycycle : %s  - ##################\n",dutycycle);
+//		printf("################## dutycycle : %s  - ##################\n",dutycycle);
 		ret = system(dutycycle);
 
 		if (ret != 0)
