@@ -75,6 +75,7 @@ static unsigned int dummy_av = 0;
 static unsigned int dummy_av2 = 0;
 
 ANALOG_VALUE_DESCR AV_Descr[MAX_ANALOG_VALUES];
+//ANALOG_VALUE_DESCR AV_Descr[MAX_ANALOG_VALUES][BACNET_MAX_PRIORITY];
 
 /* These three arrays are used by the ReadPropertyMultiple handler */
 static const int Analog_Value_Properties_Required[] = {

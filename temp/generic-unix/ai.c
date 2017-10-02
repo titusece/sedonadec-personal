@@ -230,7 +230,7 @@ loop:
 Cell BACnet_BACnetDev_doBacnetAIValueStatus(SedonaVM* vm, Cell* params)
 {
 	Cell result;
-	if(params[0].ival < 0) 
+	if(params[0].ival < 0 || params[0].ival == 0) 
 		goto loop;
 	level2_ao_new = AI_Descr[params[0].ival].Present_Value = readADC(params[0].ival);
 //	usleep(1000);
