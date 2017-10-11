@@ -130,8 +130,6 @@
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAOObjectIdBkp" id="85::22" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAVObjectIdUpdate" id="85::23" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAVObjectIdBkp" id="85::24" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVNullStatus" id="85::25" />
-  <nativeMethod qname="BACnet::BACnetDev.doBacnetAVNullInst" id="85::26" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetAIValueStatus" id="85::27" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetBIValueStatus" id="85::28" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetBVValueStatus" id="85::29" />

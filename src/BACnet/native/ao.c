@@ -941,7 +941,7 @@ exit1:
 	}
 
 	if(params[1].ival) {
-	//	printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f params[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
+		printf("BACnet_BACnetDev_doBacnetAOValueUpdate: ALERT !!! WRITING by SAE! object_index %d , priority_act %d value %f params[2].ival %d\n",object_index,priority_act_ao,params[0].fval,params[2].ival);
 		Analog_Output_Level[object_index][priority_act_ao] = params[0].fval;//Float Value updating in BDT
 
 		if(object_index == 0)//Ignore the first entry

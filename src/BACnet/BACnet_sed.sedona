@@ -52,7 +52,7 @@ class BACnetDev
   native static int doBacnetAVOverrideInst()
   native static int doBacnetAVObjectIdUpdate(int ObjectId, float value,int Priority)
   native static float doBacnetAVObjectIdBkp(int ObjectId)
-  native static bool doBacnetAVNullStatus()
-  native static int doBacnetAVNullInst()
+//  native static bool doBacnetAVNullStatus()
+//  native static int doBacnetAVNullInst()
 
 }
