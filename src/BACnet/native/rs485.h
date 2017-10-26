@@ -51,7 +51,6 @@ extern "C" {
     void RS485_Initialize(
         void);
 
-//Titus
 extern void RS485_Send_Frame(
         volatile struct mstp_port_struct_t *mstp_port,  /* port specific data */
         uint8_t * buffer,       /* frame to send (up to 501 bytes of data) */

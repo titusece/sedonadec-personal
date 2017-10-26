@@ -1,9 +1,7 @@
 //
 // Copyright (c) 2007 Tridium, Inc
+// Copyright (c) 2017 Enviro Building Services Ltd
 // All Rights Reserved.
-//
-// History:
-//   25 Sep 17  Titus   creation
 //
 
 
@@ -19,15 +17,10 @@ class BACnetBV
 	@readonly @allowNull property bool Out = false
 	@config property int ObjectID = -1
 
-	/*
-	virtual void loaded() {
-
-	}
-	*/
-	virtual override void start() {
+	virtual override void start() 
+	{
 		// Don't touch hardware until input value is valid
-		if ( !Sys.app.isSteadyState() ) 
-		return
+		if (!Sys.app.isSteadyState()) return
 
 		Sys.out.print("SEDONA: $name : \"BACnetBV\" App Started!\n")
 		count_arr[ObjectID] = 0;
@@ -35,7 +28,8 @@ class BACnetBV
 		return
 	}
 
-	override void changed(Slot slot) {
+	override void changed(Slot slot) 
+	{
 
 		super.changed(slot)
 
@@ -76,14 +70,12 @@ class BACnetBV
 
 			//Not allow to write by Sedona if BDT is written @1 (most higher priority)
 			if (ret2 == 0) {
-				//	Sys.out.print("########### $name SEDONA ALERT!!!: Not allowed to write by Sedona if BDT is written @1  PRIORITY -> $ret2 !###########\n")
 				Sys.out.print("SEDONA: $name: BACnetBV: Not allowed to write by Sedona if BDT is written @1, so pls make sure.\n")
 				ov = true;
 			}
 
 			//clear the event
 			ia[ObjectID] = -1;
-			//	Sys.out.print("$name SEDONA: $name ##################### OVERRIDE is cleared for instance $ObjectID!!! #################### \n")
 
 			In_change = true;
 			Sys.out.print("SEDONA: $name: BACnetBV: Override is cleared as \"BACnetBV.In\" is changed, so now, drive what \"BACnetBV.In\" has! ( also please note that you can't control BVs in SEDONA when BDT@1, need to write 'null' in BDT) \n")
@@ -95,7 +87,8 @@ class BACnetBV
 
 	}
 
-	virtual override void execute() {
+	virtual override void execute()
+	{
 
 		if (count_arr[ObjectID] == 0) {
 			Sys.sleep(1000ms);
@@ -103,17 +96,10 @@ class BACnetBV
 		}
 
 		count_arr[ObjectID] = 1;
-
-		//Sys.out.print("SEDONA: $name : \"BACnetBV\" App Executing...!\n")
-
 		ret3 = BACnetDev.doBacnetInitStatus()
-
 		ret = BACnetDev.doBacnetBVValueStatus(ObjectID)
-
 		ret4 = BACnetDev.doBacnetBVOverrideInst()
-
 		ia[ret4] = 1;
-
 		override_en = BACnetDev.doBacnetBVOverrideStatus()
 
 		if (ret3 == 0)
@@ -121,9 +107,7 @@ class BACnetBV
 
 
 		//overriding part
-		if( ia[ObjectID] == 1 ) {
-
-			//Sys.out.print("SEDONA: $name: BACnetBV: ObjectID $ObjectID ret4 $ret4 ret $ret BDT is trying to write the \"BACnetBV.Out\" with higher priority (called override) !\n")
+		if (ia[ObjectID] == 1) {
 
 			//Send out the data if override (priority is selected as per levels) happened
 			if (ret == 1) {
@@ -138,14 +122,14 @@ class BACnetBV
 			override_en = false
 		}
 
-		if( true_bkp )
+		if (true_bkp)
 			Out := true
 
-		if( false_bkp )
+		if (false_bkp)
 			Out := false
 
 		//all condition should match, BACnetInit called, priority is not @1 in BDT, SAE is BVSS and Not override happened by BDT.
-		if ( (ret3 == 1) && (ov == false) && (objID_status == false) ) {
+		if ((ret3 == 1) && (ov == false) && (objID_status == false)) {
 			Out := In
 			//need to send the Out value to BACnet to update the "level" variable to replicate the same in BDT tool.
 			BACnetDev.doBacnetBVValueUpdate(Out, In_change, ObjectID)
@@ -160,18 +144,13 @@ class BACnetBV
 		//Its for setting priority to BDT
 		ret2 = BACnetDev.doBacnetBVPriorityStatus(Priority, pri_change, ObjectID)
 
-		//pri[ObjectID] = ret2;
-		//pri_sed = pri[ObjectID];
-
-		//Sys.out.print("SEDONA: $name : Priority is from Sedona: $ret2\n")
-
 		//Take the value from BACnet.In after override is released.
 		if (ret2 != 0)
 			ov = false;
 	}
 
 	//defining the local variables
-	define int MAX_BINARY_VALUES = 5;//#define MAX_BINARY_VALUES 5
+	define int MAX_BINARY_VALUES = 30;//#define MAX_BINARY_VALUES 30
 	bool override_en = false;
 	bool ov = false;
 	int ret = 0;
@@ -186,11 +165,12 @@ class BACnetBV
 	int ret4 = -1;
 	int ret6 = 9;
 	//Increase all the arrays if OBJECTS count increases
-	inline static int[10] ia
-	inline static int[10] pri
+	inline static int[30] ia
+	inline static int[30] pri
 	int pri_sed = 10;
 	bool objID_status = false;
 
-	inline static int[10] count_arr;
-	inline static int[10] count_arr2;
+//Increase all the arrays if OBJECTS count increases
+	inline static int[30] count_arr;
+	inline static int[30] count_arr2;
 }

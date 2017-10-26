@@ -1,9 +1,7 @@
 //
 // Copyright (c) 2007 Tridium, Inc
+// Copyright (c) 2017 Enviro Building Services Ltd
 // All Rights Reserved.
-//
-// History:
-//   11 Sep 17  Titus   creation
 //
 
 //@niagaraIcon="module://icons/x16/io.png"
@@ -11,86 +9,74 @@ class BACnetBI
   extends Component
 {
 
-//  @defaultOnClone
+	//  @defaultOnClone
 
-  @config property bool  enable = false
-  @readonly @allowNull property bool Out = false
+	@config property bool  enable = false
+	@readonly @allowNull property bool Out = false
 
-  @defaultOnClone
-  @config property int ObjectID = -1
+	@defaultOnClone
+	@config property int ObjectID = -1
 
-/*
-virtual void loaded()
-{
-}
-*/
 
-  virtual override void start()
-  {
-    // Don't touch hardware until input value is valid
-    if ( !Sys.app.isSteadyState() )
-      return
+	virtual override void start()
+	{
+		// Don't touch hardware until input value is valid
+		if (!Sys.app.isSteadyState())
+		return
 
-	Sys.out.print("SEDONA: $name : \"BACnetBI\" App Started!\n")
-	count_arr[ObjectID] = 0;
-   return
-
-  }
-
-  override void changed(Slot slot)
-  {
-
-	if (count_arr2[ObjectID] == 0) {
-		Sys.sleep(1000ms);
-		Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+		Sys.out.print("SEDONA: $name : \"BACnetBI\" App Started!\n")
+		count_arr[ObjectID] = 0;
+		return
 	}
-	count_arr2[ObjectID] = 1;
 
-    super.changed(slot)
+	override void changed(Slot slot)
+	{
 
-    // Don't respond to prop changes while app is loading
-    if (!Sys.app.isRunning()) return
+		if (count_arr2[ObjectID] == 0) {
+			Sys.sleep(1000ms);
+			Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+		}
 
-  }
+		count_arr2[ObjectID] = 1;
+		super.changed(slot)
 
-
- virtual override void execute()
-  {
-
-	if (count_arr[ObjectID] == 0) {
-		Sys.sleep(1000ms);
-		Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+		// Don't respond to prop changes while app is loading
+		if (!Sys.app.isRunning()) return
 
 	}
 
-	count_arr[ObjectID] = 1;
 
-//Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+	virtual override void execute()
+	{
 
-ret1 = BACnetDev.doBacnetInitStatus()
+		if (count_arr[ObjectID] == 0) {
+			Sys.sleep(1000ms);
+			Sys.out.print("SEDONA: $name : \"BACnetBI\" App Executing...!\n") 
+		}
 
-ret2 = BACnetDev.doBacnetBIValueStatus(ObjectID)
+		count_arr[ObjectID] = 1;
+		ret1 = BACnetDev.doBacnetInitStatus()
+		ret2 = BACnetDev.doBacnetBIValueStatus(ObjectID)
 
-if (ret1 == 0)
-Sys.out.print("SEDONA: $name: BACnetBI: \"BACnetBI\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetBI\n")
+		if (ret1 == 0)
+			Sys.out.print("SEDONA: $name: BACnetBI: \"BACnetBI\" is enabled without enabling the \"BACnetInit\", please enable the BACnetInit and then BACnetBI\n")
 
-arr_obj[ObjectID] = 1;
+		arr_obj[ObjectID] = 1;
 
-if( arr_obj[ObjectID] == 1 )
-      {
-	if(enable)
-		Out := ret2
-      }
+		if (arr_obj[ObjectID] == 1) {
+			if (enable)
+				Out := ret2
+		}
 
-  }
+	}
 
-//defining the local variables
-define int MAX_BINARY_INPUTS = 5;//#define MAX_BINARY_INPUTS 5
-int ret1 = 0;
-bool ret2 = false;
-//Increase all the arrays if OBJECTS count increases
-inline static int[10] arr_obj;
+	//defining the local variables
+	define int MAX_BINARY_INPUTS = 5;//#define MAX_BINARY_INPUTS 5
+	int ret1 = 0;
+	bool ret2 = false;
+	//Increase all the arrays if OBJECTS count increases
+	inline static int[10] arr_obj;
 
-inline static int[10] count_arr;
-inline static int[10] count_arr2;
+	inline static int[10] count_arr;
+	inline static int[10] count_arr2;
 }

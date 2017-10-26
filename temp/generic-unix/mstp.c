@@ -581,8 +581,6 @@ void MSTP_Receive_Frame_FSM(
     return;
 }
 
-//Titus
-
 uint16_t MSTP_Put_Receive(
     volatile struct mstp_port_struct_t *mstp_port)
 {
@@ -1259,7 +1257,6 @@ void MSTP_Init(
     }
 }
 
-//Titus
 void RS485_Send_Frame(
     volatile struct mstp_port_struct_t *mstp_port,      /* port specific data */
     uint8_t * buffer,   /* frame to send (up to 501 bytes of data) */

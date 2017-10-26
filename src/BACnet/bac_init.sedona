@@ -1,11 +1,9 @@
 //
 // Copyright (c) 2007 Tridium, Inc
+// Copyright (c) 2017 Enviro Building Services Ltd
 // All Rights Reserved.
 //
-// History:
-//   06 Apr 16  Titus   creation
-//   21 May 16  Titus   modified for enabling the BACnet stack control, PORT NO and Device ID 
-//
+
 
 
 //@niagaraIcon="module://icons/x16/io.png"
@@ -14,7 +12,7 @@ class BACnetInit
 {
 
 @defaultOnClone
-@config property bool  BAC_EN = true//false
+@config property bool  BAC_EN = true
 @config property int  PORT_NO = 47808
 @config property int  DEVICE_ID = 260000
 
@@ -22,98 +20,93 @@ class BACnetInit
 //Function for delay
 	static void delay()
 	{
-	Sys.sleep(750ms)
+		Sys.sleep(750ms)
 	}
 
 
 //Initialize the BACnet stack with Port No and Device ID
 	public void init()
 	{
-	Sys.out.print("SEDONA: $name : BACnet stack is initializing... \n")
-	BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
-	BACnetDev.doBacnetSendPort(PORT_NO)
-	BACnetDev.doBacnetInit(BAC_EN)
+		Sys.out.print("SEDONA: $name : BACnet stack is initializing... \n")
+		BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
+		BACnetDev.doBacnetSendPort(PORT_NO)
+		BACnetDev.doBacnetInit(BAC_EN)
 	}
 
 //Re initialize the BACnet stack as Port No or Device ID is changed
 	public void reinit()
 	{
-	Sys.out.print("SEDONA: $name : BACnet stack is Re-initializing...\n")
-	BACnetDev.doBacnetInit(false)
-	delay()
-	BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
-	BACnetDev.doBacnetSendPort(PORT_NO)
-	BACnetDev.doBacnetInit(true)
+		Sys.out.print("SEDONA: $name : BACnet stack is Re-initializing...\n")
+		BACnetDev.doBacnetInit(false)
+		delay()
+		BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
+		BACnetDev.doBacnetSendPort(PORT_NO)
+		BACnetDev.doBacnetInit(true)
 	}
 
 //Function for App start
 	virtual override void start()
 	{
-	Sys.out.print("SEDONA: $name : BACnetInit app Started!\n")
+		Sys.out.print("SEDONA: $name : BACnetInit app Started!\n")
 
 		// Don't touch hardware until input value is valid
-		if ( !Sys.app.isSteadyState() ) {
-	Sys.out.print("SEDONA: $name : BACnet stack is start\n")
-		return
+		if (!Sys.app.isSteadyState()) {
+			Sys.out.print("SEDONA: $name : BACnet stack is start\n")
+			return
 		}
 
-	//Initialize the stack with PORT No and Device ID.
-	init()
+		//Initialize the stack with PORT No and Device ID.
+		init()
 
-	return
+		return
 	}
 
 //Function for when there is change in Sedona
 	override void changed(Slot slot)
 	{
-	super.changed(slot)
+		super.changed(slot)
 
-	// Don't respond to prop changes while app is loading
-	if (!Sys.app.isRunning()) return
+		// Don't respond to prop changes while app is loading
+		if (!Sys.app.isRunning()) return
 
-		if ( slot == BACnetInit.BAC_EN )
-		{
-		//Sys.out.print("SEDONA: BACnetInit.BAC_EN changed! $BAC_EN\n")
-	
-		if(BAC_EN == false)
-		BACnetDev.doBacnetInit(BAC_EN)		
-		else
-		start()
+		if (slot == BACnetInit.BAC_EN) {
+			//Sys.out.print("SEDONA: BACnetInit.BAC_EN changed! $BAC_EN\n")
 
+			if (BAC_EN == false)
+				BACnetDev.doBacnetInit(BAC_EN)		
+			else
+				start()
 		}
 
-		if ( slot == BACnetInit.PORT_NO || slot == BACnetInit.DEVICE_ID )
-		{
-		//Sys.out.print("SEDONA: BACnetInit.PORT_NO or BACnetInit.DEVICE_ID changed! $BAC_EN\n")
-		
+		if (slot == BACnetInit.PORT_NO || slot == BACnetInit.DEVICE_ID) {
+	
 			//Re initialize the stack if BAC_EN bit is set
-			if(BAC_EN)
+			if (BAC_EN)
 			reinit()
 		}
-
 	}
 
- virtual override void execute()
-  {
-	if(count == 0 && BAC_EN ) {
-		BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
-		BACnetDev.doBacnetSendPort(PORT_NO)
-		BACnetDev.doBacnetInit(BAC_EN)
+	virtual override void execute()
+	{
+		if (count == 0 && BAC_EN ) {
+			BACnetDev.doBacnetSendDeviceID(DEVICE_ID)
+			BACnetDev.doBacnetSendPort(PORT_NO)
+			BACnetDev.doBacnetInit(BAC_EN)
+		}
+		count++;
 	}
-	count++;
-  }
 
 
 //Function for App stop
 	virtual override void stop()
 	{
-	Sys.out.print("SEDONA: $name : BACnetInit app Stopped!\n")
-	//terminate the BACnet stack
-	BACnetDev.doBacnetInit(false)
+		Sys.out.print("SEDONA: $name : BACnetInit app Stopped!\n")
+		//terminate the BACnet stack
+		BACnetDev.doBacnetInit(false)
 	}
 
 
-bool exe_en = false;
-int count = 0;
+	bool exe_en = false;
+	int count = 0;
 
 }

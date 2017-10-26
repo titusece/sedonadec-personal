@@ -8,7 +8,7 @@
    vendor="Tridium"
    description="Support for I2C bus to control the arduino as slave"
    buildHost="titus-PC"
-   buildTime="2017-10-09T09:49:27.091+05:30"
+   buildTime="2017-10-19T09:16:41.052+05:30"
 >
 
 <!-- Dependencies -->

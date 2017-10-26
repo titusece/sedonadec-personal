@@ -8,7 +8,7 @@
    vendor="Tridium"
    description="Support for Raspberry Pi MQTT in newer method"
    buildHost="titus-PC"
-   buildTime="2017-10-09T09:49:27.198+05:30"
+   buildTime="2017-10-19T09:16:41.228+05:30"
 >
 
 <!-- Dependencies -->

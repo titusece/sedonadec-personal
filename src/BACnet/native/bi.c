@@ -210,14 +210,10 @@ BACNET_BINARY_PV Binary_Input_Present_Value(
     index = Binary_Input_Instance_To_Index(object_instance);
     if (index < MAX_BINARY_INPUTS) {
 
-	if (index == 0 || index < 0)//Ignore the first entry
-	        value = Present_Value[index];
-	else
-	        value = BBBIO_get_new(bacnet_bi_gpios[index].bbb_port,bacnet_bi_gpios[index].bbb_pin);
-
-//        value = Present_Value[index];
-//	is_high(bacnet_bi_gpios[index].bbb_port,bacnet_bi_gpios[index].bbb_pin)
-
+		if (index == 0 || index < 0)//Ignore the first entry
+			    value = Present_Value[index];
+		else
+			    value = BBBIO_get_new(bacnet_bi_gpios[index].bbb_port,bacnet_bi_gpios[index].bbb_pin);
 
         if (Polarity[index] != POLARITY_NORMAL) {
             if (value == BINARY_INACTIVE) {

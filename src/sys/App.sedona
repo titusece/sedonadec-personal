@@ -222,7 +222,7 @@ class App
         {
           more |= s.work()
           canHibernate &= s.canHibernate()
-//	  canHibernate = true;//Titus// Force to support the Hibernate
+	//	  canHibernate = true;//Force hibernation
         }
         if(canHibernate) runStatus = Err.hibernate
 

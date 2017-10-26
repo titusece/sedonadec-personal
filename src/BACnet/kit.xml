@@ -1,13 +1,13 @@
 <!--
   -  Sedona Kit
   -  Copyright 2013 Tridium Inc, All Rights Reserved.
-  -  06 Apr 16  Titus   creation
+  -  Copyright (c) 2017 Enviro Building Services Ltd
   -->
 
 <sedonaKit
  name = "BACnet"
  vendor = "Tridium"
- description = "Support for Raspberry Pi BACnet control"
+ description = "Support for Raspberry Pi and BeagleBone Black BACnet control"
  includeSource = "true"
  doc = "true"
 >
@@ -53,8 +53,6 @@
   <native qname="BACnet::BACnetDev.doBacnetAVOverrideInst"         id="85::16" />
   <native qname="BACnet::BACnetDev.doBacnetAVObjectIdUpdate"       id="85::23" />
   <native qname="BACnet::BACnetDev.doBacnetAVObjectIdBkp"          id="85::24" />
-<!--  <native qname="BACnet::BACnetDev.doBacnetAVNullStatus"           id="85::25" />
-  <native qname="BACnet::BACnetDev.doBacnetAVNullInst"             id="85::26" /> -->
 
   <!-- BACnet ANALOG INPUT fns -->
   <native qname="BACnet::BACnetDev.doBacnetAIValueStatus"          id="85::27" />

@@ -14,7 +14,7 @@
 # You can always change this to be the explicit path.This
 
 #export sedona_home=~/sedonadev-RPi2
-#Titus : sedona location in PC
+#sedona location in PC
 export sedona_home=/home/titus/workdir/Upwork/Aidan/sedonadev-RPi2-BBB-bacnet-mqtt
 
 # path
@@ -24,7 +24,6 @@ export PATH=$PATH:$sedona_home/bin:$sedona_home/adm:$sedona_home/adm/unix
 export PYTHONPATH=$PYTHONPATH:$sedona_home/adm
 
 # java environment - use JAVA_HOME from environment if set, otherwise hard code it
-#Titus : Modified for PC java installed location
 java_home=$JAVA_HOME
 
 [ -z "$java_home" ] && java_home=/usr/lib/jvm/java-9-oracle

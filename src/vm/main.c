@@ -9,10 +9,11 @@
 #include "sedona.h"
 #ifdef USE_STANDARD_MAIN
 
-//Titus : includes for sedona
 #include <stdio.h>
 #include <stdlib.h>
 #include "errorcodes.h"
+
+#include "config.h"
 
 //needed to pass version info from gcc command line as a string value (only needed for QNX)
 #define VER1(x) #x
@@ -25,6 +26,9 @@ int64_t sys_Sys_ticks(SedonaVM* vm, Cell* params);
 void sys_Sys_sleep(SedonaVM* vm, Cell* params);
 
 int64_t yieldNs = 0;
+
+unsigned int debug = 0;
+
 
 // forwards
 static int printUsage(const char* exe);
@@ -44,14 +48,13 @@ extern NativeMethod* nativeTable[];
 // Main
 ////////////////////////////////////////////////////////////////
 
-//Titus : Need to declare as global
-  bool runAsPlatform = FALSE;
+//Need to declare as global
+bool runAsPlatform = FALSE;
 
 int main(int argc, char *argv[])
 {
 
   int i;
-//Titus
 //  bool runAsPlatform = FALSE;
   char* filename = NULL;
   int optCount = 0;
@@ -66,6 +69,9 @@ int main(int argc, char *argv[])
     {
       if (strcmp(arg, "--?") == 0)   return printUsage(argv[0]);
       if (strcmp(arg, "--ver") == 0) return printVersion();
+
+      if (strcmp(arg, "--debug") == 0)
+			debug = 1;
 
       if (strcmp(arg, "--plat") == 0) runAsPlatform = TRUE;
       else if (strncmp(arg, "--home=", 7) == 0)
@@ -111,7 +117,7 @@ static int runInPlatformMode()
   const char* scode = "kits.scode";
   const char* app   = "app.sab";
 
-//Titus : hard-coded the names to run the default *.sab and *.scode files in platform mode
+//  hard-coded the names to run the default *.sab and *.scode files in platform mode
 //  const char* scode = "platRpi.scode";
 //  const char* app   = "platRpi.sab";
 
@@ -306,6 +312,7 @@ static int printUsage(const char* exe)
   printf("options:\n");
   printf("  --?       dump usage\n");
   printf("  --ver     dump version\n");
+  printf("  --debug   Enable the debug\n");
   printf("  --home=d  set current working directory\n");
   printf("  --plat    run in platform mode. 'kits.scode[.stage]' and 'app.sab[.stage]'\n");
   printf("            must be present in the working directory\n");

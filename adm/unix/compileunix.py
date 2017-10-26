@@ -24,9 +24,10 @@ import fileutil
 def gcc(exeFile, srcFiles, includes, libs, defs):  
   # standard includes                                                                   
 
-#Titus
+# Native compilation
 #  cmd = "gcc"
 
+# Cross compilation
   cmd = "arm-linux-gnueabihf-gcc"
 
   for include in includes:
@@ -36,9 +37,9 @@ def gcc(exeFile, srcFiles, includes, libs, defs):
   for d in defs:
     cmd += " -D" + d[0] + "=" + d[1]      
 
-#Titus : Need to add pthread library to build
+#Need to add pthread library to build
   cmd += " -pthread"
-#Titus : Need to add "clock" to resovle the "clock_gettime" API
+#Need to add "clock" to resovle the "clock_gettime" API
   cmd += "  -lrt -lm"
 
 #  cmd += " -DPRINT_ENABLED=1"

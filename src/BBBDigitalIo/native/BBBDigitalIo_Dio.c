@@ -1,17 +1,12 @@
-// History:
-//   22 Aug 17  Titus  creation
-
-#include "sedona.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
-
 #include <errno.h>
-
 #include "BBBiolib.h"
+
+#include "sedona.h"
 
 // Uncomment this to print diagnostics
 //#define SHOW_DEBUG

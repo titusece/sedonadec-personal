@@ -23,8 +23,8 @@
 <!--  <kit name='BBBDigitalIo' />-->
 
   <kit name='BACnet' />
-  <kit name='i2c' />
-  <kit name='mqttNew' />
+  <!-- <kit name='i2c' /> 
+  <kit name='mqttNew' /> -->
 
 </schema>
 

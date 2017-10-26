@@ -34,8 +34,8 @@
   <target name="rpiDigitalIo" />
   <target name="BBBDigitalIo" />
   <target name="BACnet" />
-  <target name="i2c" />
-  <target name="mqttNew" />
+  <!-- <target name="i2c" /> -->
+  <!--<target name="mqttNew" /> -->
 
 </sedonaDir>
 

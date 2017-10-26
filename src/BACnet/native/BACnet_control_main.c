@@ -64,7 +64,7 @@
 
 #include "sedona.h"
 
-//Titus : pthread include file
+//pthread include file
 #include <pthread.h>
 
 //RasPi
@@ -246,7 +246,7 @@ static void Init_Service_Handlers(
 
 
 
-//Titus : pthread related declarations	
+//pthread related declarations	
 void *bacnet_init_function( void *ptr );
 pthread_t thread1;
 const char *message1 = "Thread 1";
@@ -285,7 +285,7 @@ BACnet_BACnetDev_doBacnetInit(SedonaVM* vm, Cell* params)
   bool bac_opt1 = params[0].ival;
   int i;
 
-	iolib_init();//GPIO initialized for BBB//Titus
+	iolib_init();//GPIO initialized for BBB
 
 	for(i = 1; i < MAX_BINARY_OUTPUTS; i++) {//Ignore the first entry
 		iolib_setdir(bacnet_bo_gpios[i].bbb_port,bacnet_bo_gpios[i].bbb_pin, BBBIO_DIR_OUT);
@@ -314,14 +314,14 @@ bacnet_en_status = false;
 	
 }
 
-//Titus: Get the device ID from Sedona
+//Get the device ID from Sedona
 BACnet_BACnetDev_doBacnetSendDeviceID(SedonaVM* vm, Cell* params)
 {
 Device_ID = params[0].ival;
 }
 
 
-//Titus : thread created to run the SVM in loop
+//thread created to run the SVM in loop
 void *bacnet_init_function( void *ptr )
 {
 char *message;
@@ -346,9 +346,11 @@ char *argv = NULL;
     uint32_t recipient_scan_tmr = 0;
     static time_t last_seconds = 0;
 
+
+		printf("BACNET: BACnet stack thread terminated!\n");
+
     /* allow the device ID to be set */
 //    if (argc > 1)
-//Titus
 //        Device_Set_Object_Instance_Number(strtol(argv[1], NULL, 0));
 
         Device_Set_Object_Instance_Number(Device_ID);
@@ -376,11 +378,11 @@ char *argv = NULL;
     /* loop forever */
     for (;;) {
 
-	if(!bacnet_en_status)
-	{
-	printf("BACNET: BACnet stack thread terminated!\n");
-	bacnet_status = false;
-	return 0;
+	if (!bacnet_en_status) {
+//		if (debug)
+		printf("BACNET: BACnet stack thread terminated!\n");
+		bacnet_status = false;
+		return 0;
 	}
 
         /* input */

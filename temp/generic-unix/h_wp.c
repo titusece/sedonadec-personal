@@ -65,7 +65,6 @@
  */
 
 
-//Titus
 uint8_t Handler_Transmit_Buffer[MAX_PDU] = { 0 };
 
 void handler_write_property(
@@ -192,7 +191,6 @@ typedef struct _confirmed_service_data {
 Cell BACnet_BACnetDev_doTest(SedonaVM* vm, Cell* params)
 {
 
-//Titus
 uint8_t *service_request;
 uint16_t service_len = 13;
 BACNET_ADDRESS *src;

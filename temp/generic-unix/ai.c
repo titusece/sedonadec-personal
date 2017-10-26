@@ -124,7 +124,6 @@ void Analog_Input_Init(
     unsigned j;
 #endif
 
-//Titus
 	system("echo BB-ADC > /sys/devices/platform/bone_capemgr/slots");
 	printf("Analog Input init done!\n");
 
@@ -213,43 +212,34 @@ float Analog_Input_Present_Value(
 
     index = Analog_Input_Instance_To_Index(object_instance);
     if (index < MAX_ANALOG_INPUTS) {
-	if(index < 0 || index == 0) //Ignore the first entry
-		goto loop;
-	AI_Descr[index].Present_Value = readADC(index);//Titus
-//	printf("%s:%d ADC value (AI_%d) %f\n", __func__, __LINE__, index, AI_Descr[index].Present_Value);
+		if (index < 0 || index == 0) //Ignore the first entry
+			goto loop;
+		AI_Descr[index].Present_Value = readADC(index);
 loop:
-        value = AI_Descr[index].Present_Value;
+		value = AI_Descr[index].Present_Value;
     }
-
-//    printf("%s:%d PROBE2 ADC value (AI_%d) %f\n", __func__, __LINE__, index, value);
     return value;
 }
 
-#if 11
-/* Titus : return the instance or ObjectID to Sedona for which is received override event */
+/* return the instance or ObjectID to Sedona for which is received override event */
 Cell BACnet_BACnetDev_doBacnetAIValueStatus(SedonaVM* vm, Cell* params)
 {
 	Cell result;
-	if(params[0].ival < 0 || params[0].ival == 0) 
+	if (params[0].ival < 0 || params[0].ival == 0) 
 		goto loop;
 	level2_ao_new = AI_Descr[params[0].ival].Present_Value = readADC(params[0].ival);
-//	usleep(1000);
-//	sleep(1);
 loop:
-//	printf("BACNET: BACnet_BACnetDev_doBacnetAIValueStatus: level2_ao_new : %f\n",level2_ao_new);
 	result.fval = level2_ao_new;
 	return result;
-
 }
 
 
-/* Titus : Write the value again if ObjectID is changed */
+/* Write the value again if ObjectID is changed */
 BACnet_BACnetDev_doBacnetAIObjectIdUpdate(SedonaVM* vm, Cell* params)
 {
 	float val = 0.0;
 	int pri = 9;
 
-//	pri = Analog_Output_Present_Value_Sedona(params[0].ival);
 	val = AI_Descr[params[0].ival].Present_Value;
 
 	printf("BACnet: BACnet_BACnetDev_doBacnetAIObjectIdUpdate  ObjectID %d, Value in Sedona %f, Value in BACnet %f\n",params[0].ival,params[1].fval,val);
@@ -260,14 +250,14 @@ BACnet_BACnetDev_doBacnetAIObjectIdUpdate(SedonaVM* vm, Cell* params)
 	return pri;
 }
 
-/* Titus : Backup the objectID */
+/* Backup the objectID */
 Cell BACnet_BACnetDev_doBacnetAIObjectIdBkp(SedonaVM* vm, Cell* params)
 {
-Cell val;
-val.fval = AI_Descr[params[0].ival].Present_Value;
-return val;
+	Cell val;
+	val.fval = AI_Descr[params[0].ival].Present_Value;
+	return val;
 }
-#endif
+
 
 //Function definitions  
 int readADC(unsigned int pin)  

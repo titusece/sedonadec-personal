@@ -19,8 +19,6 @@
   <nativeKit depend="rpiDigitalIo 1.0+" />
   <nativeKit depend="BBBDigitalIo 1.0+" />
   <nativeKit depend="BACnet 1.0+" />
-  <nativeKit depend="i2c 1.0+" />
-  <nativeKit depend="mqttNew 1.0+" />
 
   <nativeMethod qname="sys::Sys.platformType" id="0::0" />
   <nativeMethod qname="sys::Sys.copy" id="0::1" />
@@ -139,20 +137,6 @@
   <nativeMethod qname="BACnet::BACnetDev.doBacnetBVOverrideInst" id="85::33" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetBVObjectIdUpdate" id="85::34" />
   <nativeMethod qname="BACnet::BACnetDev.doBacnetBVObjectIdBkp" id="85::35" />
-  <nativeMethod qname="i2c::I2cDev.doI2cInit" id="86::0" />
-  <nativeMethod qname="i2c::I2cDev.doI2cExit" id="86::1" />
-  <nativeMethod qname="i2c::I2cDev.doI2cRead" id="86::2" />
-  <nativeMethod qname="i2c::I2cDev.doI2cWrite" id="86::3" />
-  <nativeMethod qname="i2c::I2cDev.doI2cSensorReadEnStatus" id="86::4" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewInit_pub" id="96::0" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewPublisherInt" id="96::1" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewPublisherMsg" id="96::2" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewNetworkStatus_Pub" id="96::3" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewInit_sub" id="96::4" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewSubscriberInt" id="96::5" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewSubscriberMsg" id="96::6" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewNetworkStatus_Sub" id="96::7" />
-  <nativeMethod qname="mqttNew::MqttNew.doMqttNewRead_Topic" id="96::8" />
   <nativeMethod qname="BBBDigitalIo::Dio_BBB.doInit" id="97::0" />
   <nativeMethod qname="BBBDigitalIo::Dio_BBB.doRead" id="97::1" />
   <nativeMethod qname="BBBDigitalIo::Dio_BBB.doWrite" id="97::2" />

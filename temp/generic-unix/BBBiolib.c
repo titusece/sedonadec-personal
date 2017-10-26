@@ -25,6 +25,8 @@
 #include <string.h>
 #include "BBBiolib.h"
 
+void BBBIO_sys_GPIO_CLK_status();
+
 /* Memory mapping offset if GPIO , means the memory address of GPIOs */
 const unsigned int GPIO_AddressOffset[]={BBBIO_GPIO0_ADDR, BBBIO_GPIO1_ADDR, BBBIO_GPIO2_ADDR, BBBIO_GPIO3_ADDR};
 

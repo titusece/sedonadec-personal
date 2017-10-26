@@ -1,9 +1,7 @@
 //
 // Copyright (c) 2007 Tridium, Inc
+// Copyright (c) 2017 Enviro Building Services Ltd
 // All Rights Reserved.
-//
-// History:
-//   06 Apr 16  Titus   creation
 //
 
 class BACnetDev
@@ -52,7 +50,5 @@ class BACnetDev
   native static int doBacnetAVOverrideInst()
   native static int doBacnetAVObjectIdUpdate(int ObjectId, float value,int Priority)
   native static float doBacnetAVObjectIdBkp(int ObjectId)
-//  native static bool doBacnetAVNullStatus()
-//  native static int doBacnetAVNullInst()
 
 }

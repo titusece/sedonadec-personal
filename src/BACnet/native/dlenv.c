@@ -49,7 +49,6 @@ static long bbmd_port = 0xBAC0;
 static long bbmd_address = 0;
 static int bbmd_result = 0;
 
-//Titus
 extern uint32_t Port_No;
 
 /* Simple setters for BBMD registration variables. */
@@ -191,7 +190,7 @@ void dlenv_maintenance_timer(
 #endif
 }
 
-//Titus: Get the PORT NO from Sedona
+//Get the PORT NO from Sedona
 BACnet_BACnetDev_doBacnetSendPort(SedonaVM* vm, Cell* params)
 {
 	Port_No = params[0].ival;
@@ -257,7 +256,6 @@ void dlenv_init(
 #endif
 
 
-//Titus
 #if 0
     pEnv = getenv("BACNET_IP_PORT");
     if (pEnv) {
@@ -275,7 +273,7 @@ void dlenv_init(
 #endif
 
 
-//Titus: Set the PORT NO which we received from Sedona
+//Set the PORT NO which we received from Sedona
             bip_set_port(htons(Port_No));
 
 

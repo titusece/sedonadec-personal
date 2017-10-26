@@ -25,13 +25,15 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-//Titus
+//extern unsigned int debug = 0;
+
 #define DEF_SEDONA_PRIORITY 9
 #define MAX_BINARY_OUTPUTS 5
 #define MAX_BINARY_INPUTS 5
+#define MAX_BINARY_VALUES 30
 #define MAX_ANALOG_OUTPUTS 6
 #define MAX_ANALOG_INPUTS 8
-#define MAX_ANALOG_VALUES 5
+#define MAX_ANALOG_VALUES 30
 
 /* Note: these defines can be defined in your makefile or project
    or here or not defined and defaults will be used */

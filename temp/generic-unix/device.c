@@ -217,7 +217,7 @@ static object_functions_t My_Object_Table[] = {
             NULL /* COV Clear */ ,
         NULL /* Intrinsic Reporting */ },
 
-//Titus: Not required
+//Not required
 #if 0
     {OBJECT_CHARACTERSTRING_VALUE,
             CharacterString_Value_Init,
@@ -1879,7 +1879,6 @@ void Device_Init(
 //		printf("############ Device_Init CALLED!\n");
 
 //    characterstring_init_ansi(&My_Object_Name, "SimpleServer");
-//Titus
     characterstring_init_ansi(&My_Object_Name, "Enviro Building Service's BACNET Server");
     if (object_table) {
         Object_Table = object_table;

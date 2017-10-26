@@ -8,7 +8,7 @@
    vendor="Tridium"
    description="Support for BeagleBoneBlack digital I/O"
    buildHost="titus-PC"
-   buildTime="2017-10-09T09:49:26.940+05:30"
+   buildTime="2017-10-25T20:22:51.408+05:30"
 >
 
 <!-- Dependencies -->

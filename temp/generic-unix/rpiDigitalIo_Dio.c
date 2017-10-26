@@ -33,7 +33,7 @@
 // For the Raspberry Pi, use only GPIOs available on P2 and 3
 //
 #define NUM_P1_GPIOS 26
-int allowedGpios[NUM_P1_GPIOS] = { 2, 3, 4, 7, 8, 9, 10, 11, 14, 15, 17, 18, 22, 23, 24, 25, 27,5,6,13 }; //Titus : added some more GPIOs support for rPi2 & rPi3
+int allowedGpios[NUM_P1_GPIOS] = { 2, 3, 4, 7, 8, 9, 10, 11, 14, 15, 17, 18, 22, 23, 24, 25, 27,5,6,13 }; //added some more GPIOs support for rPi2 & rPi3
 
 
 // Flag to indicate whether one-time init has occurred since SVM started

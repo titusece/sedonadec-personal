@@ -16,8 +16,8 @@
     <nativeKit depend="rpiDigitalIo 1.0+" />
     <nativeKit depend="BBBDigitalIo 1.0+" />
     <nativeKit depend="BACnet 1.0+" />
-    <nativeKit depend="i2c 1.0+" />
-    <nativeKit depend="mqttNew 1.0+" />
+    <!-- <nativeKit depend="i2c 1.0+" /> -->
+    <!-- <nativeKit depend="mqttNew 1.0+" /> -->
  
     <!-- Sources -->
     <nativeSource path="/src/vm" />
@@ -31,8 +31,8 @@
     <nativeSource path="/src/rpiDigitalIo/native" />
     <nativeSource path="/src/BBBDigitalIo/native" />
     <nativeSource path="/src/BACnet/native" />
-    <nativeSource path="/src/i2c/native" />
-    <nativeSource path="/src/mqttNew/native" />
+    <!-- <nativeSource path="/src/i2c/native" /> -->
+    <!-- <nativeSource path="/src/mqttNew/native" /> -->
 
   </compile>    
   
